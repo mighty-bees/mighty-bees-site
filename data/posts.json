@@ -1,0 +1,46 @@
+[
+  {
+    "date": "2026-10-02",
+    "by": "Ms. Jessica",
+    "body": [
+      "Two students who are both completely new to this worked out two different problems in the same meeting, sitting next to each other.",
+      "The first one couldn't get the one meter challenge to land. He found rotation numbers for the LEGO wheels online and they weren't getting him close. So he stopped using rotations. He timed how long the robot took to cross a meter and programmed it to drive for that many seconds instead. It worked. Timing drifts as a battery drains so we won't use it on the competition robot, but it got him there.",
+      "The other one's robot kept curving instead of driving straight. His two motors were starting one after the other in the same stack, so one had a head start. He added a second \"when program starts\" block and ran each motor from its own, and it went straight.",
+      "We're keeping the name Mighty Bees and we'll ask for last year's team number if nobody has taken it. A few people want to put together a segment for the morning show."
+    ]
+  },
+  {
+    "date": "2026-09-25",
+    "by": "Ms. Jessica",
+    "body": [
+      "The 3D printers are leaving thin strings of plastic across everything they print. We think something changed in the software over the summer rather than the machines being broken, but we haven't proved it.",
+      "We want to enter the online challenge where you design a game in CAD: https://recf.org/online_challenge/no-title-2/ — it's something the whole team can work on and it doesn't need the robot. We can't sign up for it until the team itself is registered, and we're hoping to get that done Monday.",
+      "Spent the rest of the time on team roles, the website, and ideas for raising money."
+    ]
+  },
+  {
+    "date": "2026-09-23",
+    "by": "Ms. Jessica",
+    "body": [
+      "New challenge. Build an arm that picks a tennis ball up off the floor and holds it above the hub.",
+      "Almost every first attempt stalled. The arms were long and the motors couldn't turn them with the ball out at the end. One group shortened theirs. Another geared it down and kept the length.",
+      "I'm staying hands off on purpose right now. They're coming up with their own ideas and working through the problems themselves, which is what the engineering is."
+    ]
+  },
+  {
+    "date": "2026-09-18",
+    "by": "Ms. Jessica",
+    "body": [
+      "First real challenge. Build something that drives exactly one meter and stops. Not close to a meter. Measured with a tape measure on the floor.",
+      "Nobody got it on the first try. Most were off by 10 or 15 centimeters. The students who did FIRST LEGO League last year knew to go look up the wheel size first. The newer ones started by guessing and adjusting."
+    ]
+  },
+  {
+    "date": "2026-09-16",
+    "by": "Ms. Jessica",
+    "body": [
+      "We opened the bins and told everyone to build something that moves. No challenge, no rules.",
+      "Some of the group did FIRST LEGO League last year and went straight to work. A couple have never touched any of this. By five there were several things driving around on the floor."
+    ]
+  }
+]

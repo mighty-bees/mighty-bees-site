@@ -13,31 +13,14 @@
    ══════════════════════════════════════════════════════════ */
 </style>
 <script>
-const RAISED = 0;                // total raised so far, in dollars
-
-const TIERS = [                  // bottom of the tower to the top
-  // "priority" decides what money funds first. 1 gets filled before 2, and so on.
-  // It is independent of where a tier sits on the tower.
-  { pts: 1,  need: 250, priority: 3, label: "Tournament day kit",
-    note: "A pit banner, a toolbox, a table cover, and team shirts. What it takes to show up looking like a team." },
-  { pts: 5,  need: 150, priority: 2, label: "Spare parts and batteries",
-    note: "Gears snap, axles bend, batteries age. A shelf of spares is what keeps a practice from ending early." },
-  { pts: 10, need: 120, priority: 5, label: "Shop materials",
-    note: "Filament for the printers, acrylic and wood for the laser. This is also what we make our products out of." },
-  { pts: 25, need: 140, priority: 4, label: "A practice field we build ourselves",
-    note: "The official field is only sold to teams registered with VEX (not RECF), so we're building our own. Foam tiles and lumber for the field, bean bags to score with, and we print the goals ourselves on the shop printers." },
-  { pts: 50, need: 1020, priority: 1, label: "A second robot and its team",
-    note: "A kit is $844 delivered and registering the team to compete is another $175. One kit builds one robot, and one robot is one team. Two smaller teams means every student has a job that matters instead of taking turns on one robot." },
-];
-
-/* Public thank-you list. Add a line when someone gives or orders.
-   Use "Anonymous" unless they said it was fine to use their name.
-   Never put an amount here. */
-const THANKS = [
-  // { who: "The Alvarez family", what: "donation" },
-  // { who: "Anonymous",          what: "donation" },
-];
-
+/* ── Site config ──────────────────────────────────────────────
+   The page's CONTENT now lives in the /data folder as four files
+   you can edit without touching this HTML:
+     data/goal.json     the raised total and the tier goals
+     data/posts.json    the build-log entries
+     data/thanks.json   the public thank-you list
+     data/products.json the shop items
+   These three values below are settings, not content, and rarely change. */
 const TEAM_NUMBER = "[team number]";
 const CONTACT = "team@mightybeesrobotics.org";
 const PAY_LINK = "[your Square or Venmo link]";   // paste your Venmo/Square link here, e.g. https://venmo.com/u/MightyBees
@@ -442,38 +425,7 @@ footer{
     <h2>What we make <span class="flag">Opening soon</span></h2>
     <p class="sub">Everything here is designed and produced by students on our 3D printers and laser cutter, made to order. We're still getting the printers dialled in, so the shop isn't open yet. Here's what's coming.</p>
 
-    <div class="goods preview">
-      <div class="good">
-        <h3>Name keychain</h3>
-        <p>Your name, your colors. Pick from eight filament colors.</p>
-        <span class="price">$8</span>
-      </div>
-      <div class="good">
-        <h3>Articulated dragon</h3>
-        <p>Printed in one piece and it still wiggles. Six inches long.</p>
-        <span class="price">$15</span>
-      </div>
-      <div class="good">
-        <h3>Desk nameplate</h3>
-        <p>Laser-engraved acrylic on a printed stand. For teachers and offices.</p>
-        <span class="price">$18</span>
-      </div>
-      <div class="good">
-        <h3>Engraved coaster set</h3>
-        <p>Four wooden coasters, your design or ours.</p>
-        <span class="price">$22</span>
-      </div>
-      <div class="good">
-        <h3>Custom award</h3>
-        <p>For clubs and teams. Engraved acrylic, printed base, your text.</p>
-        <span class="price">from $25</span>
-      </div>
-      <div class="good">
-        <h3>Holiday ornament</h3>
-        <p>Seasonal designs. Order by the first week of December.</p>
-        <span class="price">$6</span>
-      </div>
-    </div>
+    <div class="goods preview" id="goods"></div>
 
     <p class="made"><b>Want to be told when it opens?</b> <a id="shopmail" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email us</a> and we'll let you know. We also take custom jobs, so if you need something that isn't on this list, tell us and we'll quote it. Designing to a real brief is the most useful thing these students do all year.</p>
   </div>
@@ -484,54 +436,7 @@ footer{
     <h2>Build log</h2>
     <p class="sub">What we tried, what broke, and what we changed. We meet Wednesdays and Fridays, and one of us writes up the week.</p>
 
-    <article class="entry">
-      <time datetime="2026-10-02">Oct 2</time>
-      <div>
-        <p class="by">Ms. Jessica</p>
-        <p>Two students who are both completely new to this worked out two different problems in the same meeting, sitting next to each other.</p>
-        <p>The first one couldn't get the one meter challenge to land. He found rotation numbers for the LEGO wheels online and they weren't getting him close. So he stopped using rotations. He timed how long the robot took to cross a meter and programmed it to drive for that many seconds instead. It worked. Timing drifts as a battery drains so we won't use it on the competition robot, but it got him there.</p>
-        <p>The other one's robot kept curving instead of driving straight. His two motors were starting one after the other in the same stack, so one had a head start. He added a second "when program starts" block and ran each motor from its own, and it went straight.</p>
-        <p>We're keeping the name Mighty Bees and we'll ask for last year's team number if nobody has taken it. A few people want to put together a segment for the morning show.</p>
-      </div>
-    </article>
-
-    <article class="entry">
-      <time datetime="2026-09-25">Sept 25</time>
-      <div>
-        <p class="by">Ms. Jessica</p>
-        <p>The 3D printers are leaving thin strings of plastic across everything they print. We think something changed in the software over the summer rather than the machines being broken, but we haven't proved it.</p>
-        <p>We want to enter the <a href="https://recf.org/online_challenge/no-title-2/" target="_blank" rel="noopener">online challenge where you design a game in CAD</a>. It's something the whole team can work on and it doesn't need the robot. We can't sign up for it until the team itself is registered, and we're hoping to get that done Monday.</p>
-        <p>Spent the rest of the time on team roles, the website, and ideas for raising money.</p>
-      </div>
-    </article>
-
-    <article class="entry">
-      <time datetime="2026-09-23">Sept 23</time>
-      <div>
-        <p class="by">Ms. Jessica</p>
-        <p>New challenge. Build an arm that picks a tennis ball up off the floor and holds it above the hub.</p>
-        <p>Almost every first attempt stalled. The arms were long and the motors couldn't turn them with the ball out at the end. One group shortened theirs. Another geared it down and kept the length.</p>
-        <p>I'm staying hands off on purpose right now. They're coming up with their own ideas and working through the problems themselves, which is what the engineering is.</p>
-      </div>
-    </article>
-
-    <article class="entry">
-      <time datetime="2026-09-18">Sept 18</time>
-      <div>
-        <p class="by">Ms. Jessica</p>
-        <p>First real challenge. Build something that drives exactly one meter and stops. Not close to a meter. Measured with a tape measure on the floor.</p>
-        <p>Nobody got it on the first try. Most were off by 10 or 15 centimeters. The students who did FIRST LEGO League last year knew to go look up the wheel size first. The newer ones started by guessing and adjusting.</p>
-      </div>
-    </article>
-
-    <article class="entry">
-      <time datetime="2026-09-16">Sept 16</time>
-      <div>
-        <p class="by">Ms. Jessica</p>
-        <p>We opened the bins and told everyone to build something that moves. No challenge, no rules.</p>
-        <p>Some of the group did FIRST LEGO League last year and went straight to work. A couple have never touched any of this. By five there were several things driving around on the floor.</p>
-      </div>
-    </article>
+    <div id="posts"></div>
 
   </div>
 </section>
@@ -572,99 +477,256 @@ footer{
 
 <script>
 (function () {
-  const money = n => "$" + n.toLocaleString("en-US");
-  const goal = TIERS.reduce((s, t) => s + t.need, 0);
+  "use strict";
+  const money = n => "$" + (Number(n) || 0).toLocaleString("en-US");
+  const MONTHS = ["Jan","Feb","Mar","Apr","May","June","July","Aug","Sept","Oct","Nov","Dec"];
 
-  document.getElementById("raised").textContent = money(RAISED);
-  document.getElementById("goal").textContent = money(goal);
-
-  const short = Math.max(goal - RAISED, 0);
-  document.getElementById("remaining").textContent =
-    short > 0 ? money(short) + " to go" : "Fully funded. Thank you.";
-
-  document.getElementById("teamno").textContent = "Team " + TEAM_NUMBER;
-  const m = document.getElementById("mailto");
-  m.href = "mailto:" + CONTACT + "?subject=" + encodeURIComponent("Mighty Bees Robotics");
-
-  const shopmail = document.getElementById("shopmail");
-  if (shopmail) shopmail.href = m.href;
-
+  /* ── Config-driven bits ──────────────────────────────────────────
+     The masthead, email links, and donate button never depend on a
+     data file, so they always work even if a /data file is broken. */
+  const mailHref = "mailto:" + CONTACT + "?subject=" + encodeURIComponent("Mighty Bees Robotics");
+  setText("teamno", "Team " + TEAM_NUMBER);
+  setHref("mailto", mailHref);
+  setHref("shopmail", mailHref);
   const emailtext = document.getElementById("emailtext");
-  if (emailtext) { emailtext.href = m.href; emailtext.textContent = CONTACT; }
-
+  if (emailtext) { emailtext.href = mailHref; emailtext.textContent = CONTACT; }
   const pay = document.getElementById("paylink");
-  if (PAY_LINK && PAY_LINK.charAt(0) !== "[") {
-    pay.href = PAY_LINK;
-  } else {
-    // No link set yet, so send people to email rather than a dead button.
-    pay.href = m.href;
-    pay.textContent = "Email to donate or order";
+  if (pay) {
+    if (PAY_LINK && PAY_LINK.charAt(0) !== "[") {
+      pay.href = PAY_LINK;
+    } else {
+      // No payment link set yet, so send people to email rather than a dead button.
+      pay.href = mailHref;
+      pay.textContent = "Email to donate or order";
+    }
   }
 
-  // Money funds tiers in priority order, which is independent of where
-  // a tier sits on the tower. The display order never changes.
-  let pool = RAISED;
-  const byPriority = TIERS
-    .map((t, i) => ({ ...t, i }))
-    .sort((a, b) => (a.priority || 99) - (b.priority || 99));
+  /* ── Content from /data ──────────────────────────────────────────
+     Each file loads on its own. If one is missing or has a typo, only
+     that section shows an empty state — the rest of the page is fine. */
+  load("data/goal.json",     renderGoal,     failGoal);
+  load("data/posts.json",    renderPosts,    failPosts);
+  load("data/thanks.json",   renderThanks,   failThanks);
+  load("data/products.json", renderProducts, failProducts);
 
-  byPriority.forEach(t => {
-    t.into = Math.min(pool, t.need);
-    pool -= t.into;
-    t.pct = (t.into / t.need) * 100;
-  });
+  function load(url, render, fail) {
+    fetch(url, { cache: "no-cache" })
+      .then(r => { if (!r.ok) throw new Error(url + " -> HTTP " + r.status); return r.json(); })
+      .then(data => render(data))
+      .catch(err => { console.error("Could not load " + url + ":", err); try { fail(); } catch (e) {} });
+  }
 
-  const filled = byPriority.slice().sort((a, b) => a.i - b.i);
+  // ---- goal.json : hero tally, tier tower, budget rows ----
+  function renderGoal(data) {
+    const raised = Number(data && data.raised) || 0;
+    const tiers = data && data.tiers;
+    if (!Array.isArray(tiers) || !tiers.length) throw new Error("goal.json has no tiers");
 
-  const tower = document.getElementById("tower");
-  filled.slice().reverse().forEach((t, i) => {
-    const el = document.createElement("div");
-    el.className = "tier" + (t.pct >= 100 ? " done" : "");
-    el.style.marginRight = (i * 14) + "px";     // top tier reaches furthest right
-    el.innerHTML =
-      '<span class="fill"></span>' +
-      '<span class="tier-pts">' + t.pts + '</span>' +
-      '<span class="tier-amt">' + money(t.into) + " / " + money(t.need) + "</span>";
-    tower.appendChild(el);
-  });
+    const goal = tiers.reduce((s, t) => s + (Number(t.need) || 0), 0);
+    setText("raised", money(raised));
+    setText("goal", money(goal));
+    const short = Math.max(goal - raised, 0);
+    setText("remaining", short > 0 ? money(short) + " to go" : "Fully funded. Thank you.");
 
-  requestAnimationFrame(() => {
-    tower.querySelectorAll(".tier").forEach((el, i) => {
-      const t = filled.slice().reverse()[i];
-      el.querySelector(".fill").style.width = t.pct + "%";
+    // Money funds tiers in priority order, independent of tower position.
+    let pool = raised;
+    const byPriority = tiers
+      .map((t, i) => ({ ...t, i }))
+      .sort((a, b) => (a.priority || 99) - (b.priority || 99));
+    byPriority.forEach(t => {
+      const need = Number(t.need) || 0;
+      t.into = Math.min(pool, need);
+      pool -= t.into;
+      t.pct = need ? (t.into / need) * 100 : 0;
     });
-  });
+    const filled = byPriority.slice().sort((a, b) => a.i - b.i);
 
-  const thanks = document.getElementById("thanks");
-  if (!THANKS.length) {
-    thanks.outerHTML = '<p class="thanks-empty">Be the first.</p>';
-  } else {
-    THANKS.forEach(t => {
+    // Tower: highest-points tier on top, reaching furthest right.
+    const tower = document.getElementById("tower");
+    if (tower) {
+      tower.innerHTML = "";
+      tower.style.display = "";
+      const topDown = filled.slice().reverse();
+      topDown.forEach((t, i) => {
+        const el = document.createElement("div");
+        el.className = "tier" + (t.pct >= 100 ? " done" : "");
+        el.style.marginRight = (i * 14) + "px";
+        const fill = document.createElement("span"); fill.className = "fill";
+        const pts = document.createElement("span"); pts.className = "tier-pts"; pts.textContent = t.pts;
+        const amt = document.createElement("span"); amt.className = "tier-amt";
+        amt.textContent = money(t.into) + " / " + money(t.need);
+        el.append(fill, pts, amt);
+        tower.appendChild(el);
+      });
+      requestAnimationFrame(() => {
+        tower.querySelectorAll(".tier").forEach((el, i) => {
+          const f = el.querySelector(".fill");
+          if (f) f.style.width = topDown[i].pct + "%";
+        });
+      });
+    }
+
+    // Budget rows: listed in funding order so the priority is visible.
+    const rows = document.getElementById("rows");
+    if (rows) {
+      rows.innerHTML = "";
+      const ord = ["1st","2nd","3rd","4th","5th","6th","7th","8th"];
+      filled.slice()
+        .sort((a, b) => (a.priority || 99) - (b.priority || 99))
+        .forEach((t, i) => {
+          const status = t.pct >= 100 ? "funded" : t.into > 0 ? money(t.into) + " in" : "not started yet";
+          const row = document.createElement("div");
+          row.className = "row";
+
+          const pts = document.createElement("span"); pts.className = "pts";
+          pts.appendChild(document.createTextNode(ord[i] || String(i + 1)));
+          const ptsSmall = document.createElement("small"); ptsSmall.textContent = t.pts + " pt tier";
+          pts.appendChild(ptsSmall);
+
+          const mid = document.createElement("div");
+          const h3 = document.createElement("h3"); h3.textContent = t.label || "";
+          const note = document.createElement("p"); note.textContent = t.note || "";
+          mid.append(h3, note);
+
+          const amt = document.createElement("span"); amt.className = "amt";
+          amt.appendChild(document.createTextNode(money(t.need)));
+          const amtSmall = document.createElement("small"); amtSmall.textContent = status;
+          amt.appendChild(amtSmall);
+
+          row.append(pts, mid, amt);
+          rows.appendChild(row);
+        });
+    }
+  }
+  function failGoal() {
+    // Keep the hero's default numbers; hide the empty tower and note the gap.
+    const tower = document.getElementById("tower");
+    if (tower) tower.style.display = "none";
+    const rows = document.getElementById("rows");
+    if (rows) rows.innerHTML = '<p class="sub" style="margin:0">The budget breakdown is temporarily unavailable.</p>';
+  }
+
+  // ---- posts.json : build log ----
+  function renderPosts(list) {
+    const host = document.getElementById("posts");
+    if (!host) return;
+    if (!Array.isArray(list)) throw new Error("posts.json is not a list");
+    const entries = list.filter(p => p && !p.template && !p.draft);
+    if (!entries.length) { failPosts(); return; }
+    host.innerHTML = "";
+    entries.forEach(p => {
+      const art = document.createElement("article");
+      art.className = "entry";
+
+      const time = document.createElement("time");
+      if (p.date) { time.dateTime = p.date; time.textContent = formatDate(p.date); }
+      art.appendChild(time);
+
+      const div = document.createElement("div");
+      if (p.by)    { const by = document.createElement("p"); by.className = "by"; by.textContent = p.by; div.appendChild(by); }
+      if (p.title) { const h3 = document.createElement("h3"); h3.textContent = p.title; div.appendChild(h3); }
+
+      const paras = Array.isArray(p.body) ? p.body : (p.body ? [p.body] : []);
+      paras.forEach(text => div.appendChild(paragraph(text)));
+
+      if (p.photo) {
+        const img = document.createElement("img");
+        img.className = "shot";
+        img.src = "photos/" + p.photo;
+        img.loading = "lazy";
+        img.alt = p.caption || "Mighty Bees build photo";
+        div.appendChild(img);
+        if (p.caption) { const cap = document.createElement("figcaption"); cap.textContent = p.caption; div.appendChild(cap); }
+      }
+
+      art.appendChild(div);
+      host.appendChild(art);
+    });
+  }
+  function failPosts() {
+    const host = document.getElementById("posts");
+    if (host) host.innerHTML = '<p class="sub" style="margin:0">No build-log entries yet. Check back after our next meeting.</p>';
+  }
+
+  // ---- thanks.json : public thank-you list ----
+  function renderThanks(list) {
+    const ul = document.getElementById("thanks");
+    if (!ul) return;
+    if (!Array.isArray(list) || !list.length) { failThanks(); return; }
+    ul.innerHTML = "";
+    list.forEach(t => {
+      if (!t) return;
       const li = document.createElement("li");
-      li.innerHTML = "<span>" + t.who + '</span><span class="what">' + t.what + "</span>";
-      thanks.appendChild(li);
+      const who = document.createElement("span"); who.textContent = t.who || "";
+      const what = document.createElement("span"); what.className = "what"; what.textContent = t.what || "";
+      li.append(who, what);
+      ul.appendChild(li);
     });
   }
+  function failThanks() {
+    const ul = document.getElementById("thanks");
+    if (!ul) return;
+    const p = document.createElement("p");
+    p.className = "thanks-empty";
+    p.textContent = "Be the first.";
+    ul.replaceWith(p);
+  }
 
-  const rows = document.getElementById("rows");
-  const ord = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th"];
-
-  // Listed in funding order, not tower order, so the priority is visible.
-  filled.slice()
-    .sort((a, b) => (a.priority || 99) - (b.priority || 99))
-    .forEach((t, i) => {
-      const row = document.createElement("div");
-      row.className = "row";
-      const status = t.pct >= 100 ? "funded"
-                   : t.into > 0   ? money(t.into) + " in"
-                   : "not started yet";
-      row.innerHTML =
-        '<span class="pts">' + (ord[i] || i + 1) +
-          '<small>' + t.pts + ' pt tier</small></span>' +
-        "<div><h3>" + t.label + "</h3><p>" + t.note + "</p></div>" +
-        '<span class="amt">' + money(t.need) + "<small>" + status + "</small></span>";
-      rows.appendChild(row);
+  // ---- products.json : shop ----
+  function renderProducts(list) {
+    const host = document.getElementById("goods");
+    if (!host) return;
+    if (!Array.isArray(list) || !list.length) { failProducts(); return; }
+    host.innerHTML = "";
+    list.forEach(item => {
+      if (!item) return;
+      const good = document.createElement("div");
+      good.className = "good";
+      const h3 = document.createElement("h3"); h3.textContent = item.name || "";
+      const desc = document.createElement("p"); desc.textContent = item.description || "";
+      const price = document.createElement("span"); price.className = "price";
+      price.textContent = item.price != null ? String(item.price) : "";
+      good.append(h3, desc, price);
+      host.appendChild(good);
     });
+  }
+  function failProducts() {
+    const host = document.getElementById("goods");
+    if (host) host.innerHTML = '<p class="sub" style="margin:0;padding:22px;background:var(--card)">The shop list is loading soon.</p>';
+  }
+
+  // ---- helpers ----
+  function paragraph(text) {
+    const p = document.createElement("p");
+    linkify(p, String(text == null ? "" : text));
+    return p;
+  }
+  // Turn bare http(s) links into safe clickable links; all other text is
+  // inserted as plain text, so a stray < or " can never break the page.
+  function linkify(el, text) {
+    const re = /https?:\/\/\S+/g;
+    let last = 0, mm;
+    while ((mm = re.exec(text)) !== null) {
+      if (mm.index > last) el.appendChild(document.createTextNode(text.slice(last, mm.index)));
+      let url = mm[0], trail = "";
+      const tp = url.match(/[),.;:!?]+$/);        // leave trailing punctuation out of the link
+      if (tp) { trail = tp[0]; url = url.slice(0, -trail.length); }
+      const a = document.createElement("a");
+      a.href = url; a.textContent = url;
+      a.target = "_blank"; a.rel = "noopener";
+      el.appendChild(a);
+      if (trail) el.appendChild(document.createTextNode(trail));
+      last = mm.index + mm[0].length;
+    }
+    if (last < text.length) el.appendChild(document.createTextNode(text.slice(last)));
+  }
+  function formatDate(iso) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso));
+    if (!m) return String(iso);
+    return ((MONTHS[Number(m[2]) - 1] || "") + " " + Number(m[3])).trim();
+  }
+  function setText(id, text) { const el = document.getElementById(id); if (el) el.textContent = text; }
+  function setHref(id, href) { const el = document.getElementById(id); if (el) el.href = href; }
 })();
 </script>
 

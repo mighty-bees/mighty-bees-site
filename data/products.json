@@ -1,0 +1,8 @@
+[
+  { "name": "Name keychain",       "description": "Your name, your colors. Pick from eight filament colors.",        "price": "$8" },
+  { "name": "Articulated dragon",  "description": "Printed in one piece and it still wiggles. Six inches long.",     "price": "$15" },
+  { "name": "Desk nameplate",      "description": "Laser-engraved acrylic on a printed stand. For teachers and offices.", "price": "$18" },
+  { "name": "Engraved coaster set","description": "Four wooden coasters, your design or ours.",                      "price": "$22" },
+  { "name": "Custom award",        "description": "For clubs and teams. Engraved acrylic, printed base, your text.",  "price": "from $25" },
+  { "name": "Holiday ornament",    "description": "Seasonal designs. Order by the first week of December.",          "price": "$6" }
+]
