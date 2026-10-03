@@ -23,7 +23,7 @@
    These three values below are settings, not content, and rarely change. */
 const TEAM_NUMBER = "[team number]";
 const CONTACT = "team@mightybeesrobotics.org";
-const PAY_LINK = "[your Square or Venmo link]";   // paste your Venmo/Square link here, e.g. https://venmo.com/u/MightyBees
+const PAY_LINK = "https://paypal.me/MightyBeesRobotics";   // the team's PayPal.me — anyone can pay by card
 </script>
 <style>
 :root{
@@ -494,6 +494,7 @@ footer{
   if (pay) {
     if (PAY_LINK && PAY_LINK.charAt(0) !== "[") {
       pay.href = PAY_LINK;
+      pay.textContent = "Donate or pay";
     } else {
       // No payment link set yet, so send people to email rather than a dead button.
       pay.href = mailHref;
