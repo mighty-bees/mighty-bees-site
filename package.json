@@ -1,0 +1,9 @@
+{
+  "name": "mighty-bees-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mighty Bees robotics team website — a static site with a content checker.",
+  "scripts": {
+    "check": "node scripts/check.js"
+  }
+}

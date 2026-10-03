@@ -1,5 +1,18 @@
 [
   {
+    "template": true,
+    "_READ_ME": "TO ADD A POST: copy this whole block (everything from the { above to the } below, including the comma after it), paste it right underneath, then change \"template\": true to \"template\": false and fill in your own words. Newest posts go at the TOP. Keep every quote and comma exactly. When you're done, run the checker (see README) before you publish.",
+    "date": "2026-01-15",
+    "by": "Your first name",
+    "title": "",
+    "body": [
+      "Each item in this list is one paragraph. Write what you tried, what broke, and what you changed.",
+      "Add or remove paragraphs as you like — each one wrapped in \"straight quotes\", separated by commas."
+    ],
+    "photo": "",
+    "caption": ""
+  },
+  {
     "date": "2026-10-02",
     "by": "Ms. Jessica",
     "body": [
