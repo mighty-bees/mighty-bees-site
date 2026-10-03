@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)file:///Users/jessical/Downloads/robotics-site.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mighty Bees Robotics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./index_files/css2" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════════
+   EDIT THESE NUMBERS AS MONEY COMES IN.
+   Everything on the page updates from here.
+   ══════════════════════════════════════════════════════════ */
+</style>
+<script>
+const RAISED = 0;                // total raised so far, in dollars
+
+const TIERS = [                  // bottom of the tower to the top
+  // "priority" decides what money funds first. 1 gets filled before 2, and so on.
+  // It is independent of where a tier sits on the tower.
+  { pts: 1,  need: 250, priority: 3, label: "Tournament day kit",
+    note: "A pit banner, a toolbox, a table cover, and team shirts. What it takes to show up looking like a team." },
+  { pts: 5,  need: 150, priority: 2, label: "Spare parts and batteries",
+    note: "Gears snap, axles bend, batteries age. A shelf of spares is what keeps a practice from ending early." },
+  { pts: 10, need: 120, priority: 5, label: "Shop materials",
+    note: "Filament for the printers, acrylic and wood for the laser. This is also what we make our products out of." },
+  { pts: 25, need: 140, priority: 4, label: "A practice field we build ourselves",
+    note: "The official field is only sold to teams registered with VEX (not RECF), so we're building our own. Foam tiles and lumber for the field, bean bags to score with, and we print the goals ourselves on the shop printers." },
+  { pts: 50, need: 1020, priority: 1, label: "A second robot and its team",
+    note: "A kit is $844 delivered and registering the team to compete is another $175. One kit builds one robot, and one robot is one team. Two smaller teams means every student has a job that matters instead of taking turns on one robot." },
+];
+
+/* Public thank-you list. Add a line when someone gives or orders.
+   Use "Anonymous" unless they said it was fine to use their name.
+   Never put an amount here. */
+const THANKS = [
+  // { who: "The Alvarez family", what: "donation" },
+  // { who: "Anonymous",          what: "donation" },
+];
+
+const TEAM_NUMBER = "[team number]";
+const CONTACT = "jessica@centneracademy.com";
+const PAY_LINK = "[your Square or Venmo link]";
+</script>
+<style>
+:root{
+  --paper:#EEF1F3;
+  --card:#FFFFFF;
+  --ink:#0E2434;
+  --bag:#FFC72C;
+  --bag-deep:#E0A800;
+  --iq:#0086C9;
+  --mute:#5D7589;
+  --rule:#CFD9E0;
+  --shadow:0 1px 0 rgba(14,36,52,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* ── masthead ─────────────────────────────── */
+.masthead{
+  border-bottom:2px solid var(--ink);
+  padding:18px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.mark{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;
+  font-size:21px;
+  letter-spacing:-.015em;
+}
+.mark-sub{
+  font-weight:500;
+  font-size:14px;
+  color:var(--mute);
+  letter-spacing:0;
+  margin-left:8px;
+}
+.masthead nav{display:flex;gap:22px;font-size:15px}
+.masthead nav a{color:var(--mute);text-decoration:none}
+.masthead nav a:hover,.masthead nav a:focus-visible{color:var(--ink);text-decoration:underline}
+
+/* ── hero ─────────────────────────────────── */
+.hero{
+  display:grid;
+  grid-template-columns:1fr 340px;
+  gap:56px;
+  padding:64px 0 72px;
+  align-items:center;
+}
+h1{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;
+  font-size:clamp(40px,6.2vw,68px);
+  line-height:.98;
+  letter-spacing:-.03em;
+  margin-bottom:22px;
+}
+.lede{font-size:19px;max-width:46ch;color:#294055}
+.lede.start{font-size:16.5px;color:var(--mute);margin-top:14px}
+.tally{
+  margin-top:30px;
+  padding-top:22px;
+  border-top:2px solid var(--ink);
+  display:flex;
+  align-items:baseline;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.tally .big{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;
+  font-size:40px;
+  letter-spacing:-.025em;
+}
+.tally .of{font-size:17px;color:var(--mute)}
+.tally .left{
+  margin-left:auto;
+  font-size:15px;
+  color:var(--mute);
+}
+.tally-note{
+  margin-top:12px;
+  font-size:14px;
+  line-height:1.5;
+  color:var(--mute);
+  max-width:46ch;
+}
+
+/* ── the tier tower ───────────────────────── */
+.tower{display:flex;flex-direction:column;gap:9px;justify-self:end;width:100%}
+.tier{
+  position:relative;
+  border:2px solid var(--ink);
+  background:var(--card);
+  border-radius:3px;
+  height:62px;
+  display:flex;
+  align-items:center;
+  padding:0 16px;
+  overflow:hidden;
+}
+/* Each step up reaches further right, like climbing the goal.
+   The indent is set in script so the tower works with any number of tiers. */
+
+.fill{
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:0;
+  background:var(--bag);
+  transition:width 1.1s cubic-bezier(.22,.75,.3,1);
+}
+.tier.done .fill{background:var(--bag)}
+.tier-pts{
+  position:relative;
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;
+  font-size:26px;
+  letter-spacing:-.02em;
+  min-width:52px;
+}
+.tier-amt{
+  position:relative;
+  margin-left:auto;
+  font-size:15px;
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+}
+.tower-foot{
+  margin-top:10px;
+  font-size:13px;
+  color:var(--mute);
+  text-align:right;
+  line-height:1.45;
+}
+
+/* ── sections ─────────────────────────────── */
+section{padding:62px 0;border-top:2px solid var(--ink)}
+h2{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;
+  font-size:clamp(27px,3.4vw,36px);
+  letter-spacing:-.025em;
+  margin-bottom:10px;
+}
+.sub{color:var(--mute);max-width:56ch;margin-bottom:34px}
+
+/* budget rows */
+.rows{border-top:1px solid var(--rule)}
+.row{
+  display:grid;
+  grid-template-columns:76px 1fr auto;
+  gap:20px;
+  padding:20px 0;
+  border-bottom:1px solid var(--rule);
+  align-items:start;
+}
+.row .pts{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;
+  font-size:21px;
+  color:var(--iq);
+  line-height:1.15;
+}
+.row .pts small{
+  display:block;
+  font-family:"IBM Plex Sans",sans-serif;
+  font-size:11.5px;
+  font-weight:400;
+  color:var(--mute);
+  margin-top:3px;
+  white-space:nowrap;
+}
+.row h3{font-size:18px;font-weight:600;margin-bottom:3px}
+.row p{font-size:15px;color:var(--mute);max-width:52ch}
+.row .amt{
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+  text-align:right;
+  white-space:nowrap;
+}
+.row .amt small{display:block;font-weight:400;font-size:13px;color:var(--mute);margin-top:2px}
+
+/* shop */
+.goods{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  gap:2px;
+  background:var(--rule);
+  border:1px solid var(--rule);
+}
+.good{background:var(--card);padding:22px}
+.good h3{font-size:17px;font-weight:600;margin-bottom:5px}
+.good p{font-size:14.5px;color:var(--mute);margin-bottom:12px}
+.good .price{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;
+  font-size:21px;
+}
+/* Shop isn't open yet. Remove the "preview" class from .goods and the
+   "Opening soon" flag from the heading once it is. */
+.goods.preview .good{opacity:.72}
+.goods.preview .good .price::after{
+  content:" \00B7 soon";
+  font-family:"IBM Plex Sans",sans-serif;
+  font-size:13px;
+  font-weight:500;
+  color:var(--mute);
+}
+.flag{
+  display:inline-block;
+  vertical-align:middle;
+  margin-left:12px;
+  padding:5px 11px;
+  border:2px solid var(--ink);
+  border-radius:100px;
+  background:var(--bag);
+  font-family:"IBM Plex Sans",sans-serif;
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:0;
+}
+.made{
+  margin-top:28px;
+  padding:20px 22px;
+  background:var(--ink);
+  color:var(--paper);
+  border-radius:3px;
+  font-size:15.5px;
+  max-width:62ch;
+}
+.made b{color:var(--bag)}
+
+/* log */
+.entry{
+  display:grid;
+  grid-template-columns:110px 1fr;
+  gap:22px;
+  padding:22px 0;
+  border-bottom:1px solid var(--rule);
+}
+.entry:first-of-type{border-top:1px solid var(--rule)}
+.entry time{font-size:14px;color:var(--mute);font-variant-numeric:tabular-nums;padding-top:2px}
+.entry h3{font-size:18px;font-weight:600;margin-bottom:5px}
+.entry p{font-size:15.5px;color:#30465b;max-width:62ch;margin-bottom:9px}
+.entry p:last-of-type{margin-bottom:0}
+.entry a{color:var(--iq);text-decoration:underline;text-underline-offset:2px}
+.entry a:hover,.entry a:focus-visible{color:var(--ink)}
+.entry .by{
+  font-size:13.5px;
+  color:var(--mute);
+  margin-bottom:12px;
+}
+/* Photo slot. Drop an image in /photos and point src at it.
+   Shoot the robot and the work, not faces, until media releases are confirmed. */
+.shot{
+  margin-top:14px;
+  width:100%;
+  max-width:520px;
+  aspect-ratio:4/3;
+  object-fit:cover;
+  border:2px solid var(--ink);
+  border-radius:3px;
+  background:var(--rule);
+  display:block;
+}
+.shot + figcaption{
+  margin-top:7px;
+  font-size:13.5px;
+  color:var(--mute);
+  max-width:520px;
+}
+
+/* support */
+.support{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:start}
+.thanks{list-style:none;font-size:15px}
+.thanks li{
+  padding:9px 0;
+  border-bottom:1px solid var(--rule);
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+}
+.thanks li:last-child{border-bottom:0}
+.thanks .what{color:var(--mute);text-align:right;white-space:nowrap}
+.thanks-empty{color:var(--mute);font-size:15px}
+.ask p{margin-bottom:14px;max-width:52ch}
+.sponsor{border:2px solid var(--ink);border-radius:3px;padding:24px}
+.sponsor h3{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;font-size:19px;margin-bottom:14px;
+}
+.sponsor dl{display:grid;grid-template-columns:auto 1fr;gap:9px 16px;font-size:15px}
+.sponsor dt{font-weight:600;font-variant-numeric:tabular-nums}
+.sponsor dd{color:var(--mute)}
+.mail{
+  display:inline-block;
+  margin-top:8px;
+  background:var(--bag);
+  color:var(--ink);
+  font-weight:600;
+  text-decoration:none;
+  padding:13px 22px;
+  border-radius:3px;
+  border:2px solid var(--ink);
+}
+.mail:hover,.mail:focus-visible{background:var(--bag-deep)}
+.mail.ghost{background:transparent;margin-left:10px}
+.mail.ghost:hover,.mail.ghost:focus-visible{background:var(--card)}
+
+footer{
+  border-top:2px solid var(--ink);
+  padding:28px 0 50px;
+  font-size:14px;
+  color:var(--mute);
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+:focus-visible{outline:3px solid var(--iq);outline-offset:2px}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:40px;padding:44px 0 52px}
+  .tower{order:-1}
+  .tier{margin-right:0 !important}
+  .support{grid-template-columns:1fr;gap:34px}
+  .entry{grid-template-columns:1fr;gap:4px}
+  .masthead nav{gap:16px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .fill{transition:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead wrap">
+  <span class="mark">Mighty Bees <span class="mark-sub">Centner Robotics</span></span>
+  <nav>
+    <a href="file:///Users/jessical/Downloads/robotics-site.html#budget">The goal</a>
+    <a href="file:///Users/jessical/Downloads/robotics-site.html#shop">What we make</a>
+    <a href="file:///Users/jessical/Downloads/robotics-site.html#log">Build log</a>
+    <a href="file:///Users/jessical/Downloads/robotics-site.html#support">Support us</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <div class="hero">
+    <div>
+      <h1>Build it, code it, take it to a tournament.</h1>
+      <p class="lede">The Mighty Bees build VEX IQ robots and compete in the REC Foundation's Engage league against schools across South Florida. Students design the robot, write the code that drives it, and run it in competition.</p>
+      <p class="lede start">This year the team moved up from LEGO to VEX IQ. Leftover grant money covered getting us started. Everything past that is what we raise and what we earn, and the biggest thing on the list is a second robot so every student has a real job instead of a turn.</p>
+
+      <div class="tally">
+        <span class="big" id="raised">$0</span>
+        <span class="of">raised of <strong id="goal">$1,680</strong></span>
+        <span class="left" id="remaining">$1,680 to go</span>
+      </div>
+      <p class="tally-note">Tournament entry fees are separate. Those are collected per event from the families whose students are competing, and we'll ask as each one comes up.</p>
+    </div>
+
+    <div>
+      <div class="tower" id="tower"><div class="tier" style="margin-right: 0px;"><span class="fill" style="width: 0%;"></span><span class="tier-pts">50</span><span class="tier-amt">$0 / $1,020</span></div><div class="tier" style="margin-right: 14px;"><span class="fill" style="width: 0%;"></span><span class="tier-pts">25</span><span class="tier-amt">$0 / $140</span></div><div class="tier" style="margin-right: 28px;"><span class="fill" style="width: 0%;"></span><span class="tier-pts">10</span><span class="tier-amt">$0 / $120</span></div><div class="tier" style="margin-right: 42px;"><span class="fill" style="width: 0%;"></span><span class="tier-pts">5</span><span class="tier-amt">$0 / $150</span></div><div class="tier" style="margin-right: 56px;"><span class="fill" style="width: 0%;"></span><span class="tier-pts">1</span><span class="tier-amt">$0 / $250</span></div></div>
+      <p class="tower-foot">Scored the way our game scores.<br>Higher tier, harder to reach.</p>
+    </div>
+  </div>
+
+</main>
+
+<section id="budget">
+  <div class="wrap">
+    <h2>Where every dollar goes</h2>
+    <p class="sub">The tower above mirrors this season's game, where scoring higher is worth more. This list is the order we'll actually spend the money, starting with the robot. Tournament entry fees aren't in here, because those are collected per event from the families whose students are competing.</p>
+    <div class="rows" id="rows"><div class="row"><span class="pts">1st<small>50 pt tier</small></span><div><h3>A second robot and its team</h3><p>A kit is $844 delivered and registering the team to compete is another $175. One kit builds one robot, and one robot is one team. Two smaller teams means every student has a job that matters instead of taking turns on one robot.</p></div><span class="amt">$1,020<small>not started yet</small></span></div><div class="row"><span class="pts">2nd<small>5 pt tier</small></span><div><h3>Spare parts and batteries</h3><p>Gears snap, axles bend, batteries age. A shelf of spares is what keeps a practice from ending early.</p></div><span class="amt">$150<small>not started yet</small></span></div><div class="row"><span class="pts">3rd<small>1 pt tier</small></span><div><h3>Tournament day kit</h3><p>A pit banner, a toolbox, a table cover, and team shirts. What it takes to show up looking like a team.</p></div><span class="amt">$250<small>not started yet</small></span></div><div class="row"><span class="pts">4th<small>25 pt tier</small></span><div><h3>A practice field we build ourselves</h3><p>The official field is only sold to teams registered with VEX (not RECF), so we're building our own. Foam tiles and lumber for the field, bean bags to score with, and we print the goals ourselves on the shop printers.</p></div><span class="amt">$140<small>not started yet</small></span></div><div class="row"><span class="pts">5th<small>10 pt tier</small></span><div><h3>Shop materials</h3><p>Filament for the printers, acrylic and wood for the laser. This is also what we make our products out of.</p></div><span class="amt">$120<small>not started yet</small></span></div></div>
+  </div>
+</section>
+
+<section id="shop">
+  <div class="wrap">
+    <h2>What we make <span class="flag">Opening soon</span></h2>
+    <p class="sub">Everything here is designed and produced by students on our 3D printers and laser cutter, made to order. We're still getting the printers dialled in, so the shop isn't open yet. Here's what's coming.</p>
+
+    <div class="goods preview">
+      <div class="good">
+        <h3>Name keychain</h3>
+        <p>Your name, your colors. Pick from eight filament colors.</p>
+        <span class="price">$8</span>
+      </div>
+      <div class="good">
+        <h3>Articulated dragon</h3>
+        <p>Printed in one piece and it still wiggles. Six inches long.</p>
+        <span class="price">$15</span>
+      </div>
+      <div class="good">
+        <h3>Desk nameplate</h3>
+        <p>Laser-engraved acrylic on a printed stand. For teachers and offices.</p>
+        <span class="price">$18</span>
+      </div>
+      <div class="good">
+        <h3>Engraved coaster set</h3>
+        <p>Four wooden coasters, your design or ours.</p>
+        <span class="price">$22</span>
+      </div>
+      <div class="good">
+        <h3>Custom award</h3>
+        <p>For clubs and teams. Engraved acrylic, printed base, your text.</p>
+        <span class="price">from $25</span>
+      </div>
+      <div class="good">
+        <h3>Holiday ornament</h3>
+        <p>Seasonal designs. Order by the first week of December.</p>
+        <span class="price">$6</span>
+      </div>
+    </div>
+
+    <p class="made"><b>Want to be told when it opens?</b> Email us and we'll let you know. We also take custom jobs, so if you need something that isn't on this list, tell us and we'll quote it. Designing to a real brief is the most useful thing these students do all year.</p>
+  </div>
+</section>
+
+<section id="log">
+  <div class="wrap">
+    <h2>Build log</h2>
+    <p class="sub">What we tried, what broke, and what we changed. We meet Wednesdays and Fridays, and one of us writes up the week.</p>
+
+    <article class="entry">
+      <time datetime="2026-10-02">Oct 2</time>
+      <div>
+        <p class="by">Ms. Jessica</p>
+        <p>Two students who are both completely new to this worked out two different problems in the same meeting, sitting next to each other.</p>
+        <p>The first one couldn't get the one meter challenge to land. He found rotation numbers for the LEGO wheels online and they weren't getting him close. So he stopped using rotations. He timed how long the robot took to cross a meter and programmed it to drive for that many seconds instead. It worked. Timing drifts as a battery drains so we won't use it on the competition robot, but it got him there.</p>
+        <p>The other one's robot kept curving instead of driving straight. His two motors were starting one after the other in the same stack, so one had a head start. He added a second "when program starts" block and ran each motor from its own, and it went straight.</p>
+        <p>We're keeping the name Mighty Bees and we'll ask for last year's team number if nobody has taken it. A few people want to put together a segment for the morning show.</p>
+      </div>
+    </article>
+
+    <article class="entry">
+      <time datetime="2026-09-25">Sept 25</time>
+      <div>
+        <p class="by">Ms. Jessica</p>
+        <p>The 3D printers are leaving thin strings of plastic across everything they print. We think something changed in the software over the summer rather than the machines being broken, but we haven't proved it.</p>
+        <p>We want to enter the <a href="https://recf.org/online_challenge/no-title-2/" target="_blank" rel="noopener">online challenge where you design a game in CAD</a>. It's something the whole team can work on and it doesn't need the robot. We can't sign up for it until the team itself is registered, and we're hoping to get that done Monday.</p>
+        <p>Spent the rest of the time on team roles, the website, and ideas for raising money.</p>
+      </div>
+    </article>
+
+    <article class="entry">
+      <time datetime="2026-09-23">Sept 23</time>
+      <div>
+        <p class="by">Ms. Jessica</p>
+        <p>New challenge. Build an arm that picks a tennis ball up off the floor and holds it above the hub.</p>
+        <p>Almost every first attempt stalled. The arms were long and the motors couldn't turn them with the ball out at the end. One group shortened theirs. Another geared it down and kept the length.</p>
+        <p>I'm staying hands off on purpose right now. They're coming up with their own ideas and working through the problems themselves, which is what the engineering is.</p>
+      </div>
+    </article>
+
+    <article class="entry">
+      <time datetime="2026-09-18">Sept 18</time>
+      <div>
+        <p class="by">Ms. Jessica</p>
+        <p>First real challenge. Build something that drives exactly one meter and stops. Not close to a meter. Measured with a tape measure on the floor.</p>
+        <p>Nobody got it on the first try. Most were off by 10 or 15 centimeters. The students who did FIRST LEGO League last year knew to go look up the wheel size first. The newer ones started by guessing and adjusting.</p>
+      </div>
+    </article>
+
+    <article class="entry">
+      <time datetime="2026-09-16">Sept 16</time>
+      <div>
+        <p class="by">Ms. Jessica</p>
+        <p>We opened the bins and told everyone to build something that moves. No challenge, no rules.</p>
+        <p>Some of the group did FIRST LEGO League last year and went straight to work. A couple have never touched any of this. By five there were several things driving around on the floor.</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="support">
+  <div class="wrap">
+    <h2>Support the team</h2>
+    <div class="support">
+      <div class="ask">
+        <p>Donations and orders go through the team account, managed by our coach. Every dollar is spent on the list above.</p>
+        <p>Use the payment link for anything you can pay right now. Email us for custom orders, business sponsorships, or to ask what we still need.</p>
+        <a class="mail" id="paylink" href="mailto:jessica@centneracademy.com?subject=Mighty%20Bees%20Robotics">Email to donate or order</a>
+        <a class="mail ghost" id="mailto" href="mailto:jessica@centneracademy.com?subject=Mighty%20Bees%20Robotics">Email the team</a>
+      </div>
+
+      <div class="sponsor">
+        <h3>Thanks to</h3>
+        <p class="thanks-empty">Be the first.</p>
+      </div>
+
+      <div class="sponsor">
+        <h3>Business sponsors</h3>
+        <dl>
+          <dt>$250</dt><dd>Your name on our pit banner at every tournament</dd>
+          <dt>$500</dt><dd>Banner, plus your logo on the robot and on this page</dd>
+          <dt>$750</dt><dd>All of the above, plus the team visits to show you what you funded</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>Mighty Bees · Centner Academy · Grades 5–8 · Wednesdays and Fridays, 4:00–5:00</span>
+  <span id="teamno">Team [team number]</span>
+</footer>
+
+<script>
+(function () {
+  const money = n => "$" + n.toLocaleString("en-US");
+  const goal = TIERS.reduce((s, t) => s + t.need, 0);
+
+  document.getElementById("raised").textContent = money(RAISED);
+  document.getElementById("goal").textContent = money(goal);
+
+  const short = Math.max(goal - RAISED, 0);
+  document.getElementById("remaining").textContent =
+    short > 0 ? money(short) + " to go" : "Fully funded. Thank you.";
+
+  document.getElementById("teamno").textContent = "Team " + TEAM_NUMBER;
+  const m = document.getElementById("mailto");
+  m.href = "mailto:" + CONTACT + "?subject=" + encodeURIComponent("Mighty Bees Robotics");
+
+  const pay = document.getElementById("paylink");
+  if (PAY_LINK && PAY_LINK.charAt(0) !== "[") {
+    pay.href = PAY_LINK;
+  } else {
+    // No link set yet, so send people to email rather than a dead button.
+    pay.href = m.href;
+    pay.textContent = "Email to donate or order";
+  }
+
+  // Money funds tiers in priority order, which is independent of where
+  // a tier sits on the tower. The display order never changes.
+  let pool = RAISED;
+  const byPriority = TIERS
+    .map((t, i) => ({ ...t, i }))
+    .sort((a, b) => (a.priority || 99) - (b.priority || 99));
+
+  byPriority.forEach(t => {
+    t.into = Math.min(pool, t.need);
+    pool -= t.into;
+    t.pct = (t.into / t.need) * 100;
+  });
+
+  const filled = byPriority.slice().sort((a, b) => a.i - b.i);
+
+  const tower = document.getElementById("tower");
+  filled.slice().reverse().forEach((t, i) => {
+    const el = document.createElement("div");
+    el.className = "tier" + (t.pct >= 100 ? " done" : "");
+    el.style.marginRight = (i * 14) + "px";     // top tier reaches furthest right
+    el.innerHTML =
+      '<span class="fill"></span>' +
+      '<span class="tier-pts">' + t.pts + '</span>' +
+      '<span class="tier-amt">' + money(t.into) + " / " + money(t.need) + "</span>";
+    tower.appendChild(el);
+  });
+
+  requestAnimationFrame(() => {
+    tower.querySelectorAll(".tier").forEach((el, i) => {
+      const t = filled.slice().reverse()[i];
+      el.querySelector(".fill").style.width = t.pct + "%";
+    });
+  });
+
+  const thanks = document.getElementById("thanks");
+  if (!THANKS.length) {
+    thanks.outerHTML = '<p class="thanks-empty">Be the first.</p>';
+  } else {
+    THANKS.forEach(t => {
+      const li = document.createElement("li");
+      li.innerHTML = "<span>" + t.who + '</span><span class="what">' + t.what + "</span>";
+      thanks.appendChild(li);
+    });
+  }
+
+  const rows = document.getElementById("rows");
+  const ord = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th"];
+
+  // Listed in funding order, not tower order, so the priority is visible.
+  filled.slice()
+    .sort((a, b) => (a.priority || 99) - (b.priority || 99))
+    .forEach((t, i) => {
+      const row = document.createElement("div");
+      row.className = "row";
+      const status = t.pct >= 100 ? "funded"
+                   : t.into > 0   ? money(t.into) + " in"
+                   : "not started yet";
+      row.innerHTML =
+        '<span class="pts">' + (ord[i] || i + 1) +
+          '<small>' + t.pts + ' pt tier</small></span>' +
+        "<div><h3>" + t.label + "</h3><p>" + t.note + "</p></div>" +
+        '<span class="amt">' + money(t.need) + "<small>" + status + "</small></span>";
+      rows.appendChild(row);
+    });
+})();
+</script>
+
+
+
+</body></html>
