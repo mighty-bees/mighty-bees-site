@@ -340,6 +340,9 @@ h2{
 .thanks .what{color:var(--mute);text-align:right;white-space:nowrap}
 .thanks-empty{color:var(--mute);font-size:15px}
 .ask p{margin-bottom:14px;max-width:52ch}
+.emailline{margin-top:16px;font-size:15px;color:var(--mute)}
+.emailline a{color:var(--iq);text-decoration:underline;text-underline-offset:2px;font-weight:600}
+.emailline a:hover,.emailline a:focus-visible{color:var(--ink)}
 .sponsor{border:2px solid var(--ink);border-radius:3px;padding:24px}
 .sponsor h3{
   font-family:"Bricolage Grotesque",sans-serif;
@@ -542,6 +545,7 @@ footer{
         <p>Use the payment link for anything you can pay right now. Email us for custom orders, business sponsorships, or to ask what we still need.</p>
         <a class="mail" id="paylink" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email to donate or order</a>
         <a class="mail ghost" id="mailto" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email the team</a>
+        <p class="emailline">Or write to us directly: <a id="emailtext" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">team@mightybeesrobotics.org</a></p>
       </div>
 
       <div class="sponsor">
@@ -584,6 +588,9 @@ footer{
 
   const shopmail = document.getElementById("shopmail");
   if (shopmail) shopmail.href = m.href;
+
+  const emailtext = document.getElementById("emailtext");
+  if (emailtext) { emailtext.href = m.href; emailtext.textContent = CONTACT; }
 
   const pay = document.getElementById("paylink");
   if (PAY_LINK && PAY_LINK.charAt(0) !== "[") {
