@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Local Claude Code settings
+.claude/
+
+# Raw phone photos (originals stay local; optimized copies go in photos/)
+Media/
+
+# Leftover from the original browser "Save Page As" snapshot
+index_files/
+
+# Internal handoff brief — not for the public site
+CLAUDE-CODE-BRIEF.md

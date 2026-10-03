@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<!-- saved from url=(0051)file:///Users/jessical/Downloads/robotics-site.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="en"><head><meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mighty Bees Robotics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-<link href="./index_files/css2" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ══════════════════════════════════════════════════════════
    EDIT THESE NUMBERS AS MONEY COMES IN.
@@ -40,8 +39,8 @@ const THANKS = [
 ];
 
 const TEAM_NUMBER = "[team number]";
-const CONTACT = "jessica@centneracademy.com";
-const PAY_LINK = "[your Square or Venmo link]";
+const CONTACT = "team@mightybeesrobotics.org";
+const PAY_LINK = "[your Square or Venmo link]";   // paste your Venmo/Square link here, e.g. https://venmo.com/u/MightyBees
 </script>
 <style>
 :root{
@@ -284,6 +283,8 @@ h2{
   max-width:62ch;
 }
 .made b{color:var(--bag)}
+.made a{color:var(--bag);text-decoration:underline;text-underline-offset:2px}
+.made a:hover,.made a:focus-visible{color:#fff}
 
 /* log */
 .entry{
@@ -394,10 +395,10 @@ footer{
 <header class="masthead wrap">
   <span class="mark">Mighty Bees <span class="mark-sub">Centner Robotics</span></span>
   <nav>
-    <a href="file:///Users/jessical/Downloads/robotics-site.html#budget">The goal</a>
-    <a href="file:///Users/jessical/Downloads/robotics-site.html#shop">What we make</a>
-    <a href="file:///Users/jessical/Downloads/robotics-site.html#log">Build log</a>
-    <a href="file:///Users/jessical/Downloads/robotics-site.html#support">Support us</a>
+    <a href="#budget">The goal</a>
+    <a href="#shop">What we make</a>
+    <a href="#log">Build log</a>
+    <a href="#support">Support us</a>
   </nav>
 </header>
 
@@ -418,7 +419,7 @@ footer{
     </div>
 
     <div>
-      <div class="tower" id="tower"><div class="tier" style="margin-right: 0px;"><span class="fill" style="width: 0%;"></span><span class="tier-pts">50</span><span class="tier-amt">$0 / $1,020</span></div><div class="tier" style="margin-right: 14px;"><span class="fill" style="width: 0%;"></span><span class="tier-pts">25</span><span class="tier-amt">$0 / $140</span></div><div class="tier" style="margin-right: 28px;"><span class="fill" style="width: 0%;"></span><span class="tier-pts">10</span><span class="tier-amt">$0 / $120</span></div><div class="tier" style="margin-right: 42px;"><span class="fill" style="width: 0%;"></span><span class="tier-pts">5</span><span class="tier-amt">$0 / $150</span></div><div class="tier" style="margin-right: 56px;"><span class="fill" style="width: 0%;"></span><span class="tier-pts">1</span><span class="tier-amt">$0 / $250</span></div></div>
+      <div class="tower" id="tower"></div>
       <p class="tower-foot">Scored the way our game scores.<br>Higher tier, harder to reach.</p>
     </div>
   </div>
@@ -429,7 +430,7 @@ footer{
   <div class="wrap">
     <h2>Where every dollar goes</h2>
     <p class="sub">The tower above mirrors this season's game, where scoring higher is worth more. This list is the order we'll actually spend the money, starting with the robot. Tournament entry fees aren't in here, because those are collected per event from the families whose students are competing.</p>
-    <div class="rows" id="rows"><div class="row"><span class="pts">1st<small>50 pt tier</small></span><div><h3>A second robot and its team</h3><p>A kit is $844 delivered and registering the team to compete is another $175. One kit builds one robot, and one robot is one team. Two smaller teams means every student has a job that matters instead of taking turns on one robot.</p></div><span class="amt">$1,020<small>not started yet</small></span></div><div class="row"><span class="pts">2nd<small>5 pt tier</small></span><div><h3>Spare parts and batteries</h3><p>Gears snap, axles bend, batteries age. A shelf of spares is what keeps a practice from ending early.</p></div><span class="amt">$150<small>not started yet</small></span></div><div class="row"><span class="pts">3rd<small>1 pt tier</small></span><div><h3>Tournament day kit</h3><p>A pit banner, a toolbox, a table cover, and team shirts. What it takes to show up looking like a team.</p></div><span class="amt">$250<small>not started yet</small></span></div><div class="row"><span class="pts">4th<small>25 pt tier</small></span><div><h3>A practice field we build ourselves</h3><p>The official field is only sold to teams registered with VEX (not RECF), so we're building our own. Foam tiles and lumber for the field, bean bags to score with, and we print the goals ourselves on the shop printers.</p></div><span class="amt">$140<small>not started yet</small></span></div><div class="row"><span class="pts">5th<small>10 pt tier</small></span><div><h3>Shop materials</h3><p>Filament for the printers, acrylic and wood for the laser. This is also what we make our products out of.</p></div><span class="amt">$120<small>not started yet</small></span></div></div>
+    <div class="rows" id="rows"></div>
   </div>
 </section>
 
@@ -471,7 +472,7 @@ footer{
       </div>
     </div>
 
-    <p class="made"><b>Want to be told when it opens?</b> Email us and we'll let you know. We also take custom jobs, so if you need something that isn't on this list, tell us and we'll quote it. Designing to a real brief is the most useful thing these students do all year.</p>
+    <p class="made"><b>Want to be told when it opens?</b> <a id="shopmail" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email us</a> and we'll let you know. We also take custom jobs, so if you need something that isn't on this list, tell us and we'll quote it. Designing to a real brief is the most useful thing these students do all year.</p>
   </div>
 </section>
 
@@ -539,13 +540,13 @@ footer{
       <div class="ask">
         <p>Donations and orders go through the team account, managed by our coach. Every dollar is spent on the list above.</p>
         <p>Use the payment link for anything you can pay right now. Email us for custom orders, business sponsorships, or to ask what we still need.</p>
-        <a class="mail" id="paylink" href="mailto:jessica@centneracademy.com?subject=Mighty%20Bees%20Robotics">Email to donate or order</a>
-        <a class="mail ghost" id="mailto" href="mailto:jessica@centneracademy.com?subject=Mighty%20Bees%20Robotics">Email the team</a>
+        <a class="mail" id="paylink" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email to donate or order</a>
+        <a class="mail ghost" id="mailto" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email the team</a>
       </div>
 
       <div class="sponsor">
         <h3>Thanks to</h3>
-        <p class="thanks-empty">Be the first.</p>
+        <ul class="thanks" id="thanks"></ul>
       </div>
 
       <div class="sponsor">
@@ -580,6 +581,9 @@ footer{
   document.getElementById("teamno").textContent = "Team " + TEAM_NUMBER;
   const m = document.getElementById("mailto");
   m.href = "mailto:" + CONTACT + "?subject=" + encodeURIComponent("Mighty Bees Robotics");
+
+  const shopmail = document.getElementById("shopmail");
+  if (shopmail) shopmail.href = m.href;
 
   const pay = document.getElementById("paylink");
   if (PAY_LINK && PAY_LINK.charAt(0) !== "[") {
