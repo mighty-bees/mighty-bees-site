@@ -20,7 +20,9 @@
       "The first one couldn't get the one meter challenge to land. He found rotation numbers for the LEGO wheels online and they weren't getting him close. So he stopped using rotations. He timed how long the robot took to cross a meter and programmed it to drive for that many seconds instead. It worked. Timing drifts as a battery drains so we won't use it on the competition robot, but it got him there.",
       "The other one's robot kept curving instead of driving straight. His two motors were starting one after the other in the same stack, so one had a head start. He added a second \"when program starts\" block and ran each motor from its own, and it went straight.",
       "We're keeping the name Mighty Bees and we'll ask for last year's team number if nobody has taken it. A few people want to put together a segment for the morning show."
-    ]
+    ],
+    "photo": "one-meter-drive.jpg",
+    "caption": "Testing the one-meter drive with a tape measure."
   },
   {
     "date": "2026-09-25",
@@ -54,6 +56,8 @@
     "body": [
       "We opened the bins and told everyone to build something that moves. No challenge, no rules.",
       "Some of the group did FIRST LEGO League last year and went straight to work. A couple have never touched any of this. By five there were several things driving around on the floor."
-    ]
+    ],
+    "photo": "first-builds.jpg",
+    "caption": "Some of the first builds from day one."
   }
 ]
