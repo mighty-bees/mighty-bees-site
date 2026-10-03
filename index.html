@@ -3,13 +3,13 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mighty Bees Robotics</title>
-<meta name="description" content="The Mighty Bees are a middle-school VEX IQ robotics team at Centner Academy in Miami. Students design the robot, write the code, and compete. Help fund a second robot so every student can contribute in their own way.">
+<meta name="description" content="The Mighty Bees are a middle-school VEX IQ robotics team at Centner Academy in Miami. Students design the robot, write the code, and compete. Help fund a second robot so every student has their own part to build.">
 
 <!-- Link preview card (when the site is shared in a text, iMessage, or Facebook) -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mighty Bees Robotics">
 <meta property="og:title" content="Mighty Bees Robotics">
-<meta property="og:description" content="A middle-school VEX IQ robotics team in Miami. Students design the robot, write the code, and compete. Help us fund a second robot so every student can contribute in their own way — not just take a turn.">
+<meta property="og:description" content="A middle-school VEX IQ robotics team in Miami. Students design the robot, write the code, and compete. Help us fund a second robot so every student has their own part to build, not just a turn.">
 <meta property="og:url" content="https://mightybeesrobotics.org/">
 <meta property="og:image" content="https://mightybeesrobotics.org/photos/share.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -33,7 +33,7 @@
    These three values below are settings, not content, and rarely change. */
 const TEAM_NUMBER = "[team number]";
 const CONTACT = "team@mightybeesrobotics.org";
-const PAY_LINK = "https://paypal.me/MightyBeesRobotics";   // the team's PayPal.me — anyone can pay by card
+const PAY_LINK = "https://paypal.me/MightyBeesRobotics";   // the team's PayPal.me link; anyone can pay by card
 </script>
 <style>
 :root{
@@ -363,8 +363,7 @@ h2{
 .support-fab{
   position:fixed;
   right:18px;
-  top:50%;
-  transform:translateY(-50%);
+  top:165px;
   z-index:50;
   background:var(--bag);
   color:var(--ink);
@@ -378,24 +377,27 @@ h2{
   border-radius:100px;
   box-shadow:0 4px 16px rgba(14,36,52,.22);
   transition:background .15s ease, transform .15s ease;
+  animation:fabSlideIn .5s cubic-bezier(.22,.75,.3,1) .25s both;
 }
 .support-fab:hover,.support-fab:focus-visible{
   background:var(--bag-deep);
-  transform:translateY(-50%) scale(1.05);
+  transform:scale(1.05);
+}
+@keyframes fabSlideIn{
+  from{opacity:0;transform:translateX(130%)}
+  to{opacity:1;transform:translateX(0)}
 }
 @media (max-width:860px){
   .support-fab{
     top:auto;
     bottom:16px;
     right:16px;
-    transform:none;
     padding:12px 18px;
     font-size:14px;
   }
-  .support-fab:hover,.support-fab:focus-visible{transform:scale(1.05)}
 }
 @media (prefers-reduced-motion:reduce){
-  .support-fab{transition:none}
+  .support-fab{transition:none;animation:none}
 }
 
 footer{
@@ -445,7 +447,7 @@ footer{
     <div>
       <h1>Build it, code it, take it to a tournament.</h1>
       <p class="lede">The Mighty Bees build VEX IQ robots and compete in the REC Foundation's Engage league against schools across South Florida. Students design the robot, write the code that drives it, and run it in competition.</p>
-      <p class="lede start">This year the team moved up from LEGO to VEX IQ. Leftover grant money covered getting us started. Everything past that is what we raise and what we earn, and the biggest thing on the list is a second robot. Two smaller teams would let every student contribute in their own way — their creativity, their dedication, their ideas — instead of taking turns on a single robot.</p>
+      <p class="lede start">This year the team moved up from LEGO to VEX IQ. Leftover grant money covered getting us started. Everything past that is what we raise and what we earn, and the biggest thing on the list is a second robot. Two smaller teams means every student has their own part to build, instead of taking turns on one robot.</p>
 
       <div class="tally">
         <span class="big" id="raised">$0</span>
@@ -522,7 +524,7 @@ footer{
 </section>
 
 <footer class="wrap">
-  <span>Mighty Bees · Centner Academy · Grades 5–8 · Wednesdays and Fridays, 4:00–5:00</span>
+  <span>Mighty Bees · Centner Academy · Grades 5-8 · Wednesdays and Fridays, 4:00-5:00</span>
   <span id="teamno">Team [team number]</span>
 </footer>
 
@@ -555,7 +557,7 @@ footer{
 
   /* ── Content from /data ──────────────────────────────────────────
      Each file loads on its own. If one is missing or has a typo, only
-     that section shows an empty state — the rest of the page is fine. */
+     that section shows an empty state; the rest of the page is fine. */
   load("data/goal.json",     renderGoal,     failGoal);
   load("data/posts.json",    renderPosts,    failPosts);
   load("data/thanks.json",   renderThanks,   failThanks);

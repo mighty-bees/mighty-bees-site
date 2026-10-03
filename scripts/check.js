@@ -19,7 +19,7 @@ function read(file) {
   if (!fs.existsSync(full)) { errors.push([file, "File is missing from the data folder."]); return null; }
   const raw = fs.readFileSync(full, "utf8");
 
-  // Warn about curly "smart quotes" — the #1 cause of broken files.
+  // Warn about curly "smart quotes" - the #1 cause of broken files.
   const lines = raw.split("\n");
   lines.forEach((line, i) => {
     for (const ch of Object.keys(SMART)) {
@@ -60,7 +60,7 @@ function isStr(s) { return typeof s === "string" && s.length > 0; }
     if (!isStr(t.label)) errors.push([w, "'label' (the short name) is missing."]);
     if (!isStr(t.note)) warnings.push([w, "'note' (the description) is empty."]);
   });
-  ok.push("goal.json — raised $" + d.raised.toLocaleString() + ", " + d.tiers.length + " tiers");
+  ok.push("goal.json - raised $" + d.raised.toLocaleString() + ", " + d.tiers.length + " tiers");
 })();
 
 // ---- posts.json ----
@@ -78,14 +78,14 @@ function isStr(s) { return typeof s === "string" && s.length > 0; }
       errors.push([w, "'date' should look like \"2026-10-02\" (year-month-day, in quotes)."]);
     if (!isStr(p.by)) warnings.push([w, "'by' (who wrote it) is empty."]);
     const body = Array.isArray(p.body) ? p.body : (isStr(p.body) ? [p.body] : null);
-    if (!body || !body.length) errors.push([w, "'body' is empty — add at least one paragraph in quotes."]);
+    if (!body || !body.length) errors.push([w, "'body' is empty - add at least one paragraph in quotes."]);
     else body.forEach((para, j) => { if (!isStr(para)) errors.push([w, "paragraph #" + (j + 1) + " should be text in \"quotes\"."]); });
     if (isStr(p.photo)) {
       const img = path.join(__dirname, "..", "photos", p.photo);
       if (!fs.existsSync(img)) warnings.push([w, "photo \"" + p.photo + "\" isn't in the photos/ folder yet, so it won't show."]);
     }
   });
-  ok.push("posts.json — " + shown + " post" + (shown === 1 ? "" : "s") + (templates ? " (+" + templates + " template, not published)" : ""));
+  ok.push("posts.json - " + shown + " post" + (shown === 1 ? "" : "s") + (templates ? " (+" + templates + " template, not published)" : ""));
 })();
 
 // ---- thanks.json ----
@@ -99,7 +99,7 @@ function isStr(s) { return typeof s === "string" && s.length > 0; }
     if (!isStr(t.who)) errors.push([w, "'who' (name or \"Anonymous\") is missing."]);
     if (!isStr(t.what)) warnings.push([w, "'what' (e.g. \"donation\") is empty."]);
   });
-  ok.push("thanks.json — " + d.length + " thank-you" + (d.length === 1 ? "" : "s"));
+  ok.push("thanks.json - " + d.length + " thank-you" + (d.length === 1 ? "" : "s"));
 })();
 
 // ---- products.json ----
@@ -114,7 +114,7 @@ function isStr(s) { return typeof s === "string" && s.length > 0; }
     if (!isStr(p.description)) warnings.push([w, "'description' is empty."]);
     if (!isStr(p.price) && !isNum(p.price)) warnings.push([w, "'price' is empty (e.g. \"$8\" or \"from $25\")."]);
   });
-  ok.push("products.json — " + d.length + " item" + (d.length === 1 ? "" : "s"));
+  ok.push("products.json - " + d.length + " item" + (d.length === 1 ? "" : "s"));
 })();
 
 // ---- report ----

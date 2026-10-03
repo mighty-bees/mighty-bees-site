@@ -11,6 +11,6 @@
     { "pts": 25, "need": 140,  "priority": 4, "label": "A practice field we build ourselves",
       "note": "The official field is only sold to teams registered with VEX (not RECF), so we're building our own. Foam tiles and lumber for the field, bean bags to score with, and we print the goals ourselves on the shop printers." },
     { "pts": 50, "need": 1020, "priority": 1, "label": "A second robot and its team",
-      "note": "A kit is $844 delivered and registering the team to compete is another $175. One kit builds one robot, and one robot is one team. Two smaller teams would let every student contribute in their own way — their creativity, their dedication, their ideas — instead of taking turns on a single robot." }
+      "note": "A kit is $844 delivered and registering the team to compete is another $175. One kit builds one robot, and one robot is one team. Two smaller teams means every student has their own part to build, instead of taking turns on one robot." }
   ]
 }
