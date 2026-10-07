@@ -294,6 +294,20 @@ h2{
 .entry p:last-of-type{margin-bottom:0}
 .entry a{color:var(--iq);text-decoration:underline;text-underline-offset:2px}
 .entry a:hover,.entry a:focus-visible{color:var(--ink)}
+.entry{scroll-margin-top:20px}
+.entry-meta{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.post-link{
+  font-family:inherit;
+  font-size:12.5px;
+  color:var(--iq);
+  background:none;
+  border:0;
+  padding:0;
+  cursor:pointer;
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+.post-link:hover,.post-link:focus-visible{color:var(--ink)}
 .entry .by{
   font-size:13.5px;
   color:var(--mute);
@@ -668,13 +682,19 @@ footer{
     const entries = list.filter(p => p && !p.template && !p.draft);
     if (!entries.length) { failPosts(); return; }
     host.innerHTML = "";
+    const usedIds = {};
     entries.forEach(p => {
       const art = document.createElement("article");
       art.className = "entry";
+      art.id = postId(p, usedIds);               // gives each post its own #link
 
+      const meta = document.createElement("div");
+      meta.className = "entry-meta";
       const time = document.createElement("time");
       if (p.date) { time.dateTime = p.date; time.textContent = formatDate(p.date); }
-      art.appendChild(time);
+      meta.appendChild(time);
+      meta.appendChild(copyLinkButton(art.id));
+      art.appendChild(meta);
 
       const div = document.createElement("div");
       if (p.by)    { const by = document.createElement("p"); by.className = "by"; by.textContent = p.by; div.appendChild(by); }
@@ -696,6 +716,52 @@ footer{
       art.appendChild(div);
       host.appendChild(art);
     });
+
+    // Posts load after the page does, so if someone opened a direct post link
+    // (#post-...), scroll to it once the posts exist.
+    if (location.hash.indexOf("#post-") === 0) {
+      const target = document.getElementById(location.hash.slice(1));
+      if (target) requestAnimationFrame(() => target.scrollIntoView());
+    }
+  }
+
+  // A stable id per post, based on its date (e.g. post-2026-10-02).
+  function postId(p, used) {
+    const base = "post-" + (/^\d{4}-\d{2}-\d{2}$/.test(p.date || "") ? p.date : "entry");
+    let id = base, n = 2;
+    while (used[id]) { id = base + "-" + n; n++; }
+    used[id] = true;
+    return id;
+  }
+
+  // "Copy link" button: copies the full link to this post and shows a confirmation.
+  function copyLinkButton(id) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "post-link";
+    btn.textContent = "Copy link";
+    btn.addEventListener("click", () => {
+      const url = location.origin + location.pathname + "#" + id;
+      const done = () => { btn.textContent = "Copied!"; setTimeout(() => { btn.textContent = "Copy link"; }, 1600); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done, () => fallbackCopy(url, done));
+      } else {
+        fallbackCopy(url, done);
+      }
+      history.replaceState(null, "", "#" + id);   // also puts the link in the address bar
+    });
+    return btn;
+  }
+
+  function fallbackCopy(text, done) {
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      done();
+    } catch (e) { /* if copy is blocked, the address bar still holds the link */ }
   }
   function failPosts() {
     const host = document.getElementById("posts");
