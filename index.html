@@ -34,6 +34,10 @@
 const TEAM_NUMBER = "[team number]";
 const CONTACT = "team@mightybeesrobotics.org";
 const PAY_LINK = "https://paypal.me/MightyBeesRobotics";   // the team's PayPal.me link; anyone can pay by card
+
+/* Temporary switches. Flip these back when the site is ready. */
+const UNDER_CONSTRUCTION = true;   // true shows the "under construction" banner at the top of every page
+const DONATIONS_OPEN = false;      // false pauses the donate button and hides the floating "Support us" button
 </script>
 <style>
 :root{
@@ -414,6 +418,24 @@ h2{
   .support-fab{transition:none;animation:none}
 }
 
+/* ── under-construction banner + paused donate button ── */
+.construction{
+  background:var(--ink);
+  color:var(--bag);
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;
+  font-size:14px;
+  line-height:1.4;
+  letter-spacing:.005em;
+  text-align:center;
+  padding:11px 24px;
+}
+.mail.disabled{
+  opacity:.5;
+  cursor:not-allowed;
+  pointer-events:none;
+}
+
 footer{
   border-top:2px solid var(--ink);
   padding:28px 0 50px;
@@ -442,6 +464,8 @@ footer{
 </style>
 </head>
 <body>
+
+<div class="construction" id="construction">Under construction. We're still building this site, so some things here aren't finished yet.</div>
 
 <a href="#support" class="support-fab">Support us</a>
 
@@ -559,7 +583,13 @@ footer{
   if (emailtext) { emailtext.href = mailHref; emailtext.textContent = CONTACT; }
   const pay = document.getElementById("paylink");
   if (pay) {
-    if (PAY_LINK && PAY_LINK.charAt(0) !== "[") {
+    if (!DONATIONS_OPEN) {
+      // Donations paused for now: a quiet, non-clickable note instead of a button.
+      pay.removeAttribute("href");
+      pay.textContent = "Donations coming soon";
+      pay.classList.add("disabled");
+      pay.setAttribute("aria-disabled", "true");
+    } else if (PAY_LINK && PAY_LINK.charAt(0) !== "[") {
       pay.href = PAY_LINK;
       pay.textContent = "Donate or pay";
     } else {
@@ -568,6 +598,13 @@ footer{
       pay.textContent = "Email to donate or order";
     }
   }
+
+  // Under-construction banner shows unless the switch is off.
+  const banner = document.getElementById("construction");
+  if (banner && !UNDER_CONSTRUCTION) banner.remove();
+  // Hide the floating "Support us" button while donations are paused.
+  const fab = document.querySelector(".support-fab");
+  if (fab && !DONATIONS_OPEN) fab.remove();
 
   /* ── Content from /data ──────────────────────────────────────────
      Each file loads on its own. If one is missing or has a typo, only
