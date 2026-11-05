@@ -78,15 +78,15 @@ A finished post looks like this:
 ```json
 {
   "raised": 0,
-  "tiers": [
-    { "pts": 50, "need": 1020, "priority": 1, "label": "A second robot", "note": "Why it matters." }
-  ]
+  "goal": 1680
 }
 ```
 
 - `raised` - total raised so far, a plain number of dollars (no `$`, no quotes).
-- Each tier: `pts` (game points on the tower), `need` (its cost in dollars),
-  `priority` (what the money fills first - 1 before 2 before 3...), `label`, `note`.
+- `goal` - what we're aiming for, same format.
+
+The bar on the page fills itself in from those two numbers. As money comes in,
+change `raised` and nothing else.
 
 ## Thank-yous (`data/thanks.json`)
 

@@ -49,18 +49,11 @@ function isStr(s) { return typeof s === "string" && s.length > 0; }
 (function () {
   const d = read("goal.json");
   if (!d) return;
-  if (typeof d !== "object" || Array.isArray(d)) { errors.push(["goal.json", "Should be a single { ... } block with 'raised' and 'tiers'."]); return; }
+  if (typeof d !== "object" || Array.isArray(d)) { errors.push(["goal.json", "Should be a single { ... } block with 'raised' and 'goal'."]); return; }
   if (!isNum(d.raised) || d.raised < 0) errors.push(["goal.json", "'raised' should be a number of dollars, like 250 (no $ sign, no quotes)."]);
-  if (!Array.isArray(d.tiers) || !d.tiers.length) { errors.push(["goal.json", "'tiers' should be a list with at least one goal."]); return; }
-  d.tiers.forEach((t, i) => {
-    const w = "goal.json tier #" + (i + 1);
-    if (!isNum(t.pts)) errors.push([w, "'pts' should be a number (the game points)."]);
-    if (!isNum(t.need) || t.need <= 0) errors.push([w, "'need' should be a dollar amount, like 150 (no $ sign, no quotes)."]);
-    if (!isNum(t.priority)) warnings.push([w, "'priority' should be a number (what gets funded first)."]);
-    if (!isStr(t.label)) errors.push([w, "'label' (the short name) is missing."]);
-    if (!isStr(t.note)) warnings.push([w, "'note' (the description) is empty."]);
-  });
-  ok.push("goal.json - raised $" + d.raised.toLocaleString() + ", " + d.tiers.length + " tiers");
+  if (!isNum(d.goal) || d.goal <= 0) { errors.push(["goal.json", "'goal' should be a dollar amount, like 1680 (no $ sign, no quotes)."]); return; }
+  if (isNum(d.raised) && d.raised > d.goal) warnings.push(["goal.json", "'raised' is bigger than 'goal' - the bar will show as full."]);
+  ok.push("goal.json - raised $" + d.raised.toLocaleString() + " of $" + d.goal.toLocaleString());
 })();
 
 // ---- posts.json ----
