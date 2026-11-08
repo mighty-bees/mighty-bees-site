@@ -262,11 +262,13 @@ h2{
 /* Photo slot. Drop an image in /photos and point src at it.
    Shoot the robot and the work, not faces, until media releases are confirmed. */
 .shot{
+  /* Show the whole photo. Never crop. Portrait phone shots are capped by
+     height so they don't take over the page; wide shots by width. */
   margin-top:14px;
-  width:100%;
-  max-width:520px;
-  aspect-ratio:4/3;
-  object-fit:cover;
+  width:auto;
+  height:auto;
+  max-width:min(100%,520px);
+  max-height:600px;
   border:2px solid var(--ink);
   border-radius:3px;
   background:var(--rule);
