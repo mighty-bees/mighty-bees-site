@@ -81,6 +81,34 @@ function isStr(s) { return typeof s === "string" && s.length > 0; }
   ok.push("posts.json - " + shown + " post" + (shown === 1 ? "" : "s") + (templates ? " (+" + templates + " template, not published)" : ""));
 })();
 
+// ---- events.json ----
+(function () {
+  const d = read("events.json");
+  if (!d) return;
+  if (!Array.isArray(d)) { errors.push(["events.json", "Should be a list [ ... ] of events (use [] when it's empty)."]); return; }
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  let upcoming = 0, past = 0, templates = 0;
+  d.forEach((e, i) => {
+    const w = "events.json event #" + (i + 1);
+    if (!e || typeof e !== "object") { errors.push([w, "This event isn't a proper { ... } block."]); return; }
+    if (e.template === true) { templates++; return; }
+    if (!isStr(e.date) || !/^\d{4}-\d{2}-\d{2}$/.test(e.date)) {
+      errors.push([w, "'date' should look like \"2026-11-11\" (year-month-day, in quotes)."]);
+      return;
+    }
+    if (!isStr(e.what)) errors.push([w, "'what' is missing - say what's happening, in quotes."]);
+    const p = e.date.split("-");
+    const when = new Date(+p[0], +p[1] - 1, +p[2]);
+    if (isNaN(when.getTime())) { errors.push([w, "'date' isn't a real date."]); return; }
+    if (when < today) past++; else upcoming++;
+  });
+  let line = "events.json - " + upcoming + " upcoming";
+  if (past) line += ", " + past + " already passed (hidden automatically, no need to delete)";
+  if (templates) line += " (+" + templates + " template, not published)";
+  ok.push(line);
+  if (!upcoming) warnings.push(["events.json", "Nothing upcoming, so the box will say \"Nothing on the calendar yet.\""]);
+})();
+
 // ---- thanks.json ----
 (function () {
   const d = read("thanks.json");

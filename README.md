@@ -2,7 +2,7 @@
 
 The live site: **https://mightybeesrobotics.org**
 
-It's one page. All the words and numbers that change come from four files in the
+It's one page. All the words and numbers that change come from five files in the
 **`data/`** folder, so you can update the site **without ever touching the code**.
 Edit a file on GitHub, commit, and the site updates itself in about a minute.
 
@@ -17,6 +17,7 @@ Edit a file on GitHub, commit, and the site updates itself in about a minute.
 | You want to... | Edit this file |
 |---|---|
 | Add a build-log post | `data/posts.json` |
+| Add something to "What's coming up" | `data/events.json` |
 | Update the money raised or the goals | `data/goal.json` |
 | Add a thank-you | `data/thanks.json` |
 | Change the shop items | `data/products.json` |
@@ -72,6 +73,30 @@ A finished post looks like this:
 - `body` - a list of paragraphs, each in quotes. A full web link starting with
   `http` becomes clickable automatically.
 - `photo` / `caption` - optional (see Photos below). Leave as `""` if none.
+
+## What's coming up (`data/events.json`)
+
+The box at the top right of the page. Same idea as posts: copy the template
+block, change `"template": true` to `false`, fill it in.
+
+```json
+{
+  "date": "2026-12-06",
+  "what": "Qualifier at Somewhere Middle School",
+  "where": "Doors 8am, first match 9:30"
+}
+```
+
+- `date` - `"YYYY-MM-DD"`.
+- `what` - one short line. Meetings we miss count too ("No meeting, Veterans Day").
+- `where` - optional second line. Leave as `""` if there's nothing to add.
+
+**You never have to delete old events.** The page sorts by date, hides anything
+that's already passed, and shows the next five. Add things as you book them and
+leave them there.
+
+The line underneath ("We meet Wednesdays and Fridays, 4 to 5") is in
+`index.html`, not in this file - it's the standing schedule, not an event.
 
 ## Money and goals (`data/goal.json`)
 
@@ -131,7 +156,7 @@ If you have Node installed on a computer, from this folder run:
 npm run check
 ```
 
-(or `node scripts/check.js`). It reads all four data files and tells you in plain
+(or `node scripts/check.js`). It reads all five data files and tells you in plain
 English if anything's wrong - missing commas, smart quotes, empty fields - and
 won't let a broken file reach the site unnoticed. Green ✓ means you're good.
 

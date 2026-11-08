@@ -1,0 +1,14 @@
+[
+  {
+    "template": true,
+    "_READ_ME": "TO ADD AN EVENT: copy this whole block (everything from the { above to the } below, including the comma after it), paste it right underneath, then change \"template\": true to \"template\": false and fill in your own words. Order doesn't matter - the site sorts by date for you, and anything that has already passed drops off on its own, so you never have to delete old events. Keep every quote and comma exactly.",
+    "date": "2026-01-15",
+    "what": "What's happening",
+    "where": "Optional - where it is, or a short note. Leave it as \"\" if there's nothing to add."
+  },
+  {
+    "date": "2026-11-11",
+    "what": "No meeting, Veterans Day",
+    "where": ""
+  }
+]
