@@ -76,8 +76,8 @@
       "We had our VEX IQ robot parts delivered! Ethan started building the robot and learning its design model, while Athena and Enrico were planning out expenses for bingo night, and Myles was getting the new motor to work.",
       "Overall, we made tons of progress that day."
     ],
-    "photo": "sorting-parts.jpg",
-    "caption": "Sorting the kit the day it arrived."
+    "photo": "vex-kit-day.jpg",
+    "caption": "The VEX IQ kit open on the floor the day it came in."
   },
   {
     "date": "2026-10-16",
@@ -93,7 +93,9 @@
     "body": [
       "We got to know how the tournament will work and a preview of what we will be getting into.",
       "We checked out the kit of the robot parts, and we started to sculpt some ideas on CAD."
-    ]
+    ],
+    "photo": "game-idea-board.jpg",
+    "caption": "Working out a game idea on the board."
   },
   {
     "date": "2026-10-02",
@@ -139,8 +141,6 @@
     "body": [
       "We opened the bins and told everyone to build something that moves. No challenge, no rules.",
       "Some of the group did FIRST LEGO League last year and went straight to work. A couple have never touched any of this. By five there were several things driving around on the floor."
-    ],
-    "photo": "first-builds.jpg",
-    "caption": "First days with the parts out."
+    ]
   }
 ]
