@@ -89,6 +89,15 @@
   },
   {
     "date": "2026-10-14",
+    "by": "Ms. Jessica",
+    "body": [
+      "Calibrated both 3D printers and ran a test print."
+    ],
+    "photo": "calibration-test-print.jpg",
+    "caption": "First test run after calibrating."
+  },
+  {
+    "date": "2026-10-14",
     "by": "Ethan",
     "body": [
       "We got to know how the tournament will work and a preview of what we will be getting into.",
