@@ -37,7 +37,7 @@ const CONTACT = "team@mightybeesrobotics.org";
 const PAY_LINK = "https://paypal.me/MightyBeesRobotics";   // the team's PayPal.me link; anyone can pay by card
 
 /* Temporary switches. Flip these back when the site is ready. */
-const UNDER_CONSTRUCTION = true;   // true shows the "under construction" banner at the top of every page
+const UNDER_CONSTRUCTION = false;  // true shows the "under construction" banner at the top of every page
 const DONATIONS_OPEN = true;       // false pauses the donate button and hides the floating "Support us" button
 </script>
 <style>
@@ -370,9 +370,10 @@ h2{
 
 /* ── floating "Support us" button (stays put while scrolling) ── */
 .support-fab{
+  /* Bottom right, so it never lands on the "what's coming up" box. */
   position:fixed;
   right:18px;
-  top:165px;
+  bottom:18px;
   z-index:50;
   background:var(--bag);
   color:var(--ink);
