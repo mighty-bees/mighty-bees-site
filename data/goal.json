@@ -1,5 +1,5 @@
 {
   "_comment": "Two numbers. raised = how much has come in so far, in whole dollars. goal = what we're aiming for. The bar on the site fills in automatically. Change raised as money comes in and that's the only edit this file needs.",
-  "raised": 0,
+  "raised": 250,
   "goal": 1680
 }
