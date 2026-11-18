@@ -787,11 +787,12 @@ footer{
     if (!Array.isArray(list) || !list.length) { failThanks(); return; }
     ul.innerHTML = "";
     list.forEach(t => {
-      if (!t) return;
+      // A plain name is all this file holds now. The object form is the old
+      // shape and still works, so a half-finished edit never blanks the list.
+      const name = typeof t === "string" ? t : (t && t.who) || "";
+      if (!name.trim()) return;
       const li = document.createElement("li");
-      const who = document.createElement("span"); who.textContent = t.who || "";
-      const what = document.createElement("span"); what.className = "what"; what.textContent = t.what || "";
-      li.append(who, what);
+      li.textContent = name;
       ul.appendChild(li);
     });
   }

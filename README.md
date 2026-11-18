@@ -115,14 +115,19 @@ change `raised` and nothing else.
 
 ## Thank-yous (`data/thanks.json`)
 
+Just a list of names, one per line, each in quotes with a comma after it (no
+comma on the last one).
+
 ```json
 [
-  { "who": "The Alvarez family", "what": "donation" },
-  { "who": "Anonymous", "what": "sponsorship" }
+  "The Alvarez Family",
+  "Anonymous"
 ]
 ```
 
-Use `"Anonymous"` unless they said it's OK to use their name. Never put an amount.
+Use `"Anonymous"` unless they said it's OK to use their name. Never put an
+amount next to anyone's name - the total on the bar is public, what each person
+gave is not.
 When it's empty, leave it as `[]` and the section shows "Be the first."
 
 ## Shop items (`data/products.json`)

@@ -116,9 +116,15 @@ function isStr(s) { return typeof s === "string" && s.length > 0; }
   if (!Array.isArray(d)) { errors.push(["thanks.json", "Should be a list [ ... ] (use [] when it's empty)."]); return; }
   d.forEach((t, i) => {
     const w = "thanks.json entry #" + (i + 1);
-    if (!t || typeof t !== "object") { errors.push([w, "Should be a { \"who\": ..., \"what\": ... } block."]); return; }
-    if (!isStr(t.who)) errors.push([w, "'who' (name or \"Anonymous\") is missing."]);
-    if (!isStr(t.what)) warnings.push([w, "'what' (e.g. \"donation\") is empty."]);
+    if (isStr(t)) {
+      if (!t.trim()) errors.push([w, "Empty. Put a name in the quotes, or \"Anonymous\"."]);
+      return;
+    }
+    if (t && typeof t === "object" && isStr(t.who)) {
+      warnings.push([w, "Old style. This one still works, but it can be just the name in quotes now."]);
+      return;
+    }
+    errors.push([w, "Should be a name in quotes, like \"The Alvarez Family\" or \"Anonymous\"."]);
   });
   ok.push("thanks.json - " + d.length + " thank-you" + (d.length === 1 ? "" : "s"));
 })();
