@@ -288,6 +288,25 @@ h2{
 .entry a{color:var(--iq);text-decoration:underline;text-underline-offset:2px}
 .entry a:hover,.entry a:focus-visible{color:var(--ink)}
 .entry{scroll-margin-top:20px}
+/* Folded posts. Only the newest one shows until you press the button. */
+.entry.folded{display:none}
+.more{
+  display:block;
+  width:100%;
+  margin-top:20px;
+  padding:15px 18px;
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;
+  font-size:14.5px;
+  letter-spacing:.01em;
+  color:var(--iq);
+  background:var(--card);
+  border:2px solid var(--ink);
+  border-radius:4px;
+  cursor:pointer;
+  text-align:center;
+}
+.more:hover,.more:focus-visible{background:var(--ink);color:#fff}
 .entry-meta{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
 .post-link{
   font-family:inherit;
@@ -334,9 +353,7 @@ h2{
 .thanks li{
   padding:9px 0;
   border-bottom:1px solid var(--rule);
-  display:flex;
-  justify-content:space-between;
-  gap:14px;
+  line-height:1.5;
 }
 .thanks li:last-child{border-bottom:0}
 .thanks .what{color:var(--mute);text-align:right;white-space:nowrap}
@@ -523,6 +540,7 @@ footer{
     <p class="sub">What the team's up to.</p>
 
     <div id="posts"></div>
+    <button type="button" class="more" id="morebtn" aria-controls="posts" hidden></button>
 
   </div>
 </section>
@@ -536,12 +554,13 @@ footer{
         <p>Use the payment link for anything you can pay right now. Email us for custom orders, business sponsorships, or to ask what we still need.</p>
         <a class="mail" id="paylink" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email to donate or order</a>
         <a class="mail ghost" id="mailto" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email the team</a>
+        <p class="emailline"><strong>When you pay, add a note.</strong> Tell us the name you'd like thanked and whether we can show the amount, or say you'd rather stay anonymous. Businesses can add a website and we'll link it.</p>
         <p class="emailline">Or write to us directly: <a id="emailtext" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">team@mightybeesrobotics.org</a></p>
       </div>
 
       <div class="sponsor-col">
       <div class="sponsor">
-        <h3>Thank you</h3>
+        <h3>Thanks to...</h3>
         <ul class="thanks" id="thanks"></ul>
         <p class="thanks-note">We only list people who said we could. Tell us if you'd rather not be named.</p>
       </div>
@@ -692,12 +711,64 @@ footer{
       host.appendChild(art);
     });
 
+    // Only the newest post shows at first. The button underneath opens the rest
+    // and says how many there are, so it's clear there's more to read.
+    const openAll = foldPosts(host);
+
     // Posts load after the page does, so if someone opened a direct post link
-    // (#post-...), scroll to it once the posts exist.
+    // (#post-...), scroll to it once the posts exist. An older post is folded
+    // away at that moment, so open the log first or the link goes nowhere.
     if (location.hash.indexOf("#post-") === 0) {
+      openAll();
       const target = document.getElementById(location.hash.slice(1));
       if (target) requestAnimationFrame(() => target.scrollIntoView());
     }
+
+    // Same again for a link followed while the page is already open, or the
+    // back button, neither of which reloads anything.
+    window.addEventListener("hashchange", () => {
+      if (location.hash.indexOf("#post-") !== 0) return;
+      openAll();
+      const el = document.getElementById(location.hash.slice(1));
+      if (el) requestAnimationFrame(() => el.scrollIntoView());
+    });
+  }
+
+  // Hides every post after the first and wires up the button. Returns a
+  // function that opens them all, for the deep-link case above.
+  function foldPosts(host) {
+    const rest = Array.prototype.slice.call(host.children, 1);
+    const btn = document.getElementById("morebtn");
+    if (!btn || !rest.length) return function () {};
+    let open = false;
+
+    function label() {
+      btn.textContent = open
+        ? "Show less"
+        : "Read the rest of the build log (" + rest.length + " more post" + (rest.length === 1 ? "" : "s") + ")";
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+    function show() {
+      if (open) return;
+      open = true;
+      rest.forEach(el => el.classList.remove("folded"));
+      label();
+    }
+    function hide() {
+      open = false;
+      rest.forEach(el => el.classList.add("folded"));
+      label();
+    }
+
+    hide();
+    btn.hidden = false;
+    btn.addEventListener("click", () => {
+      if (!open) { show(); return; }
+      hide();
+      const top = document.getElementById("log");
+      if (top) top.scrollIntoView();
+    });
+    return show;
   }
 
   // A stable id per post, based on its date (e.g. post-2026-10-02).
@@ -807,19 +878,22 @@ footer{
       const name = typeof t === "string" ? t : (t && t.who) || "";
       if (!name.trim()) return;
       const li = document.createElement("li");
-      // "[BR Nation](https://example.com)" becomes a link. Anything else is
-      // plain text. Only http and https, so a bad link can't run anything.
-      const link = /^\s*\[([^\]]+)\]\(\s*(https?:\/\/[^\s)]+)\s*\)\s*$/.exec(name);
-      if (link) {
+      // Any [Name](https://...) in the line becomes a link and the rest stays
+      // plain text, so a line can read "[BR Nation](...) for their $250".
+      // Only http and https, so a bad link can't run anything.
+      const re = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+      let last = 0, m;
+      while ((m = re.exec(name)) !== null) {
+        if (m.index > last) li.appendChild(document.createTextNode(name.slice(last, m.index)));
         const a = document.createElement("a");
-        a.textContent = link[1];
-        a.href = link[2];
+        a.textContent = m[1];
+        a.href = m[2];
         a.rel = "noopener";
         a.target = "_blank";
         li.appendChild(a);
-      } else {
-        li.textContent = name;
+        last = m.index + m[0].length;
       }
+      if (last < name.length) li.appendChild(document.createTextNode(name.slice(last)));
       ul.appendChild(li);
     });
   }

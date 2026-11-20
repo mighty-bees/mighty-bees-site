@@ -118,10 +118,10 @@ function isStr(s) { return typeof s === "string" && s.length > 0; }
     const w = "thanks.json entry #" + (i + 1);
     if (isStr(t)) {
       if (!t.trim()) { errors.push([w, "Empty. Put a name in the quotes, or \"Anonymous\"."]); return; }
-      if (t.indexOf("[") !== -1 || t.indexOf("](") !== -1) {
-        if (!/^\s*\[[^\]]+\]\(\s*https?:\/\/[^\s)]+\s*\)\s*$/.test(t)) {
-          errors.push([w, "Looks like a link but isn't quite right. It should read [Their Name](https://their-site.com) with nothing else around it."]);
-        }
+      const wanted = (t.match(/\]\(/g) || []).length;
+      const good = (t.match(/\[[^\]]+\]\(https?:\/\/[^\s)]+\)/g) || []).length;
+      if (wanted !== good) {
+        errors.push([w, "Looks like a link but isn't quite right. It should read [Their Name](https://their-site.com) - square brackets, then round brackets, no space between them, and the address has to start with https://"]);
       }
       return;
     }

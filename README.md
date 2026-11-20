@@ -115,23 +115,29 @@ change `raised` and nothing else.
 
 ## Thank-yous (`data/thanks.json`)
 
-Just a list of names, one per line, each in quotes with a comma after it (no
-comma on the last one).
+The heading on the page reads "Thanks to..." and each line finishes that
+sentence. So write the line the way you'd say it out loud.
 
 ```json
 [
-  "[BR Nation](https://brnation.group/en/)",
+  "[BR Nation](https://brnation.group/en/) for their donation of $250",
   "The Alvarez Family",
   "Anonymous"
 ]
 ```
 
-To make a name clickable (business sponsors usually want this), write it as
-`[Their Name](https://their-site.com)`. Plain names stay plain.
+Each line is in quotes with a comma after it (no comma on the last one).
 
-Use `"Anonymous"` unless they said it's OK to use their name. Never put an
-amount next to anyone's name - the total on the bar is public, what each person
-gave is not.
+To make a name clickable (business sponsors usually want this), write it as
+`[Their Name](https://their-site.com)` - square brackets, then round brackets,
+no space between them, and the address has to start with `https://`. It can sit
+anywhere in the line. Plain names stay plain.
+
+Two rules about what you put in a line:
+- Use `"Anonymous"` unless they said it's OK to use their name.
+- Only show an amount if they said that's OK too. If they didn't say, leave it
+  off and just write the name.
+
 When it's empty, leave it as `[]` and the section shows "Be the first."
 
 ## Shop items (`data/products.json`)
