@@ -120,10 +120,14 @@ comma on the last one).
 
 ```json
 [
+  "[BR Nation](https://brnation.group/en/)",
   "The Alvarez Family",
   "Anonymous"
 ]
 ```
+
+To make a name clickable (business sponsors usually want this), write it as
+`[Their Name](https://their-site.com)`. Plain names stay plain.
 
 Use `"Anonymous"` unless they said it's OK to use their name. Never put an
 amount next to anyone's name - the total on the bar is public, what each person

@@ -345,6 +345,17 @@ h2{
 .emailline{margin-top:16px;font-size:15px;color:var(--mute)}
 .emailline a{color:var(--iq);text-decoration:underline;text-underline-offset:2px;font-weight:600}
 .emailline a:hover,.emailline a:focus-visible{color:var(--ink)}
+.sponsor-col{display:grid;gap:24px;align-content:start}
+.thanks-note{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--rule);
+  font-size:13.5px;
+  line-height:1.5;
+  color:var(--mute);
+}
+.thanks a{color:var(--iq);text-decoration:underline;text-underline-offset:2px}
+.thanks a:hover,.thanks a:focus-visible{color:var(--ink)}
 .sponsor{border:2px solid var(--ink);border-radius:3px;padding:24px}
 .sponsor h3{
   font-family:"Bricolage Grotesque",sans-serif;
@@ -528,9 +539,11 @@ footer{
         <p class="emailline">Or write to us directly: <a id="emailtext" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">team@mightybeesrobotics.org</a></p>
       </div>
 
+      <div class="sponsor-col">
       <div class="sponsor">
-        <h3>Thanks to</h3>
+        <h3>Thank you</h3>
         <ul class="thanks" id="thanks"></ul>
+        <p class="thanks-note">We only list people who said we could. Tell us if you'd rather not be named.</p>
       </div>
 
       <div class="sponsor">
@@ -540,6 +553,7 @@ footer{
           <dt>$500</dt><dd>Banner, plus your logo on the robot and on this page</dd>
           <dt>$750</dt><dd>All of the above, plus the team visits to show you what you funded</dd>
         </dl>
+      </div>
       </div>
     </div>
   </div>
@@ -793,7 +807,19 @@ footer{
       const name = typeof t === "string" ? t : (t && t.who) || "";
       if (!name.trim()) return;
       const li = document.createElement("li");
-      li.textContent = name;
+      // "[BR Nation](https://example.com)" becomes a link. Anything else is
+      // plain text. Only http and https, so a bad link can't run anything.
+      const link = /^\s*\[([^\]]+)\]\(\s*(https?:\/\/[^\s)]+)\s*\)\s*$/.exec(name);
+      if (link) {
+        const a = document.createElement("a");
+        a.textContent = link[1];
+        a.href = link[2];
+        a.rel = "noopener";
+        a.target = "_blank";
+        li.appendChild(a);
+      } else {
+        li.textContent = name;
+      }
       ul.appendChild(li);
     });
   }

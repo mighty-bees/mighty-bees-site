@@ -117,7 +117,12 @@ function isStr(s) { return typeof s === "string" && s.length > 0; }
   d.forEach((t, i) => {
     const w = "thanks.json entry #" + (i + 1);
     if (isStr(t)) {
-      if (!t.trim()) errors.push([w, "Empty. Put a name in the quotes, or \"Anonymous\"."]);
+      if (!t.trim()) { errors.push([w, "Empty. Put a name in the quotes, or \"Anonymous\"."]); return; }
+      if (t.indexOf("[") !== -1 || t.indexOf("](") !== -1) {
+        if (!/^\s*\[[^\]]+\]\(\s*https?:\/\/[^\s)]+\s*\)\s*$/.test(t)) {
+          errors.push([w, "Looks like a link but isn't quite right. It should read [Their Name](https://their-site.com) with nothing else around it."]);
+        }
+      }
       return;
     }
     if (t && typeof t === "object" && isStr(t.who)) {
