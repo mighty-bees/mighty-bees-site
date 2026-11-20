@@ -365,17 +365,49 @@ h2{
 .emailline a{color:var(--iq);text-decoration:underline;text-underline-offset:2px;font-weight:600}
 .emailline a:hover,.emailline a:focus-visible{color:var(--ink)}
 .sponsor-col{display:grid;gap:24px;align-content:start}
-/* The little "how would you like to be thanked" block by the donate button.
-   It doesn't send anything anywhere. It writes the wording for you and puts
-   it on your clipboard, so you can paste it into PayPal's own note field. */
+/* The "how would you like to be thanked" box. It opens when someone presses
+   the donate button and is not on the page otherwise. It doesn't send
+   anything anywhere: it writes the wording and puts it on the clipboard, so
+   they can paste it into PayPal's own note field. */
 .thankbox{
-  margin-top:26px;
   border:2px solid var(--ink);
   border-radius:4px;
   background:var(--card);
-  padding:20px 21px 22px;
-  max-width:460px;
+  color:var(--ink);
+  padding:24px 24px 26px;
+  width:min(94vw,470px);
+  max-height:86vh;
+  overflow:auto;
+  position:relative;
 }
+.thankbox::backdrop{background:rgba(14,36,52,.55)}
+.tb-x{
+  position:absolute;
+  top:9px;
+  right:11px;
+  font-family:inherit;
+  font-size:26px;
+  line-height:1;
+  color:var(--mute);
+  background:none;
+  border:0;
+  padding:4px 6px;
+  cursor:pointer;
+}
+.tb-x:hover,.tb-x:focus-visible{color:var(--ink)}
+.tb-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.tb-skip{
+  font-family:inherit;
+  font-size:14.5px;
+  color:var(--mute);
+  background:none;
+  border:0;
+  padding:4px 0;
+  cursor:pointer;
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+.tb-skip:hover,.tb-skip:focus-visible{color:var(--ink)}
 .thankbox h3{font-size:17px;margin-bottom:6px}
 .tb-why{font-size:14.5px;line-height:1.5;color:var(--mute);margin-bottom:16px}
 .tb-field{margin-bottom:13px}
@@ -541,7 +573,7 @@ footer{
   <div class="hero">
     <div>
       <h1>Our first season.</h1>
-      <p class="lede">The Mighty Bees are the robotics team at Centner Academy Middle and High School in Miami. We're Team 31800 in the REC Foundation's Engage league. We build VEX IQ robots and compete against schools around South Florida. This year's game is Tier Takeover. <a href="https://games.recf.org/engage/2.0">Here's the manual</a>.</p>
+      <p class="lede">The Mighty Bees are the robotics team at Centner Academy Middle and High School in Miami. We're Team 31800 in the REC Foundation's Engage league. We build VEX IQ robots and compete against schools around South Florida. This year's game is Tier Takeover. <a href="https://games.recf.org/engage/3.0">Here's the manual</a>.</p>
       <p class="lede start">We have one robot kit, some LEGO the old club left behind, and a couple of 3D printers. Everything else we have to raise. Right now we're all busy getting a new club off the ground and we could use some resources.</p>
 
       <div class="tally">
@@ -581,7 +613,7 @@ footer{
 
     <div class="goods" id="goods"></div>
 
-    <p class="made"><b>Want one?</b> <a id="shopmail" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email us</a> and we'll tell you how soon we can have it ready. We also take custom jobs. If you have your own file, <a href="printing.html">send it over for a 3D print quote</a>. If you need something that doesn't exist yet, tell us and the students will design it. Working to a real brief is the most useful thing they do all year.</p>
+    <p class="made"><b>Want one?</b> <a id="shopmail" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email us</a> and we'll tell you how soon we can have it ready. We also take custom jobs. If you have your own file, <a href="printing.html">send it over for a 3D print quote</a>. If you need something that doesn't exist yet, tell us and the students will design it.</p>
   </div>
 </section>
 
@@ -594,7 +626,8 @@ footer{
         <p>Use the payment link for anything you can pay right now. Email us for custom orders, business sponsorships, or to ask what we still need.</p>
         <a class="mail" id="paylink" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email to donate or order</a>
         <a class="mail ghost" id="mailto" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email the team</a>
-        <div class="thankbox">
+        <dialog class="thankbox" id="thanksdlg">
+          <button type="button" class="tb-x" id="tb-x" aria-label="Close">&times;</button>
           <h3>How would you like to be thanked?</h3>
           <p class="tb-why"><strong>When you pay, add a note.</strong> Tell us the name you'd like thanked and whether we can show the amount, or say you'd rather stay anonymous. Businesses can add a website and we'll link it. Fill this in and we'll write that note for you to paste.</p>
           <div class="tb-field">
@@ -607,9 +640,12 @@ footer{
           </div>
           <label class="tb-check"><input type="checkbox" id="tb-amount"> You can show how much I gave</label>
           <label class="tb-check"><input type="checkbox" id="tb-anon"> Thank me as Anonymous instead</label>
-          <button type="button" class="tb-go" id="tb-go">Copy my note</button>
+          <div class="tb-row">
+            <button type="button" class="tb-go" id="tb-go">Copy my note and pay</button>
+            <button type="button" class="tb-skip" id="tb-skip">Skip, just take me to PayPal</button>
+          </div>
           <p class="tb-done" id="tb-done" hidden></p>
-        </div>
+        </dialog>
         <p class="emailline">Or write to us directly: <a id="emailtext" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">team@mightybeesrobotics.org</a></p>
       </div>
 
@@ -670,21 +706,42 @@ footer{
     }
   }
 
-  /* The "how would you like to be thanked" block. It builds the wording and
-     copies it, and that's all. Nothing is sent anywhere and nothing is kept.
-     Hidden while donations are paused, since there'd be nothing to paste into. */
+  /* The "how would you like to be thanked" box. It opens over the page when
+     someone presses the donate button, builds the wording, copies it, and
+     sends them on to PayPal. Nothing is sent anywhere and nothing is kept. */
   (function () {
-    const box = document.querySelector(".thankbox");
+    const box = document.getElementById("thanksdlg");
     if (!box) return;
-    if (!DONATIONS_OPEN) { box.hidden = true; return; }
+    if (!DONATIONS_OPEN || !PAY_LINK || PAY_LINK.charAt(0) === "[") return;
 
     const name   = document.getElementById("tb-name");
     const site   = document.getElementById("tb-site");
     const amount = document.getElementById("tb-amount");
     const anon   = document.getElementById("tb-anon");
     const go     = document.getElementById("tb-go");
+    const skip   = document.getElementById("tb-skip");
+    const shut   = document.getElementById("tb-x");
     const done   = document.getElementById("tb-done");
-    if (!name || !site || !amount || !anon || !go || !done) return;
+    if (!name || !site || !amount || !anon || !go || !skip || !shut || !done) return;
+    // Older browsers without <dialog> just follow the link to PayPal.
+    if (typeof box.showModal !== "function") return;
+
+    function toPayPal() { window.open(PAY_LINK, "_blank", "noopener"); }
+    function close() { if (box.open) box.close(); }
+
+    // The donate button opens the box instead of leaving the page. The link
+    // itself still points at PayPal, so it works without any of this.
+    if (pay) {
+      pay.addEventListener("click", e => {
+        if (!pay.getAttribute("href")) return;
+        e.preventDefault();
+        done.hidden = true;
+        box.showModal();
+        name.focus();
+      });
+    }
+    shut.addEventListener("click", close);
+    skip.addEventListener("click", () => { close(); toPayPal(); });
 
     function say(msg) { done.textContent = msg; done.hidden = false; }
 
@@ -712,12 +769,14 @@ footer{
     go.addEventListener("click", () => {
       const text = sentence();
       if (!text) { say("Put a name in first, or tick Anonymous."); name.focus(); return; }
-      const ok = () => say("Copied. Paste it into the note when you pay.");
+      // Copy and open PayPal in the same click, or the browser blocks the tab.
+      let copied = false;
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(ok, () => fallbackCopy(text, ok));
-      } else {
-        fallbackCopy(text, ok);
+        try { navigator.clipboard.writeText(text); copied = true; } catch (e) { /* falls through */ }
       }
+      if (!copied) fallbackCopy(text, () => {});
+      say("Copied. Paste it into the note on PayPal, then close this.");
+      toPayPal();
     });
   })();
 
