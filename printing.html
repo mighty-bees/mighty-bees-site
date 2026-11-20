@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D printing - Mighty Bees Robotics</title>
+<meta name="description" content="Get a quote for a 3D print from the Mighty Bees robotics team at Centner Academy in Miami. Students run the printers and the money goes to the team.">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mighty Bees Robotics">
+<meta property="og:title" content="3D printing with the Mighty Bees">
+<meta property="og:description" content="Send us your file and we'll quote it. Students run the printers and the money goes straight to the team.">
+<meta property="og:url" content="https://mightybeesrobotics.org/printing.html">
+<meta property="og:image" content="https://mightybeesrobotics.org/photos/share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script>
+/* ── Settings ─────────────────────────────────────────────────
+   CONTACT is where quote requests land.
+
+   UPLOAD_FORM: leave it as "" and the page uses the email route below,
+   which works for everybody and needs no account. If you ever make a
+   Google Form with a file-upload question, paste its EMBED link here
+   (in Google Forms: Send > < > > Copy) and this page will show that
+   form instead, upload box and all. Nothing else needs changing. */
+const CONTACT = "team@mightybeesrobotics.org";
+const UPLOAD_FORM = "";
+</script>
+
+<style>
+:root{
+  --paper:#EEF1F3;
+  --card:#FFFFFF;
+  --ink:#0E2434;
+  --bag:#FFC72C;
+  --bag-deep:#E0A800;
+  --iq:#0086C9;
+  --mute:#5D7589;
+  --rule:#CFD9E0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* masthead and footer, same as the front page */
+.masthead{
+  border-bottom:2px solid var(--ink);
+  padding:18px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.mark{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:21px;letter-spacing:-.015em}
+.mark a{color:inherit;text-decoration:none}
+.mark-sub{font-weight:500;font-size:14px;color:var(--mute);letter-spacing:0;margin-left:8px}
+.masthead nav{display:flex;gap:22px;font-size:15px}
+.masthead nav a{color:var(--mute);text-decoration:none}
+.masthead nav a[aria-current]{color:var(--ink);font-weight:600}
+.masthead nav a:hover,.masthead nav a:focus-visible{color:var(--ink);text-decoration:underline}
+/* Four links don't fit across a phone, so let them wrap and tighten up. */
+@media (max-width:560px){.masthead nav{flex-wrap:wrap;gap:8px 16px;font-size:14px}}
+footer{
+  border-top:2px solid var(--ink);
+  padding:28px 0 50px;
+  margin-top:70px;
+  font-size:14px;
+  color:var(--mute);
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+}
+:focus-visible{outline:3px solid var(--iq);outline-offset:2px}
+
+h1{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;
+  font-size:clamp(30px,3.8vw,42px);
+  line-height:1.08;
+  letter-spacing:-.02em;
+  margin-bottom:20px;
+}
+h2{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;
+  font-size:clamp(22px,2.6vw,27px);
+  letter-spacing:-.02em;
+  margin-bottom:10px;
+}
+.lede{font-size:18.5px;max-width:62ch;margin-bottom:16px}
+.top{padding:56px 0 10px}
+
+/* two columns on a wide screen: the form, then the plain-English notes */
+.cols{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(250px,330px);
+  gap:54px;
+  align-items:start;
+  padding:34px 0 0;
+}
+@media (max-width:900px){.cols{grid-template-columns:1fr;gap:40px}}
+
+.card{background:var(--card);border:2px solid var(--ink);border-radius:4px;padding:26px 26px 28px}
+
+.step{
+  font-family:"Bricolage Grotesque",sans-serif;
+  font-weight:800;
+  font-size:12.5px;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--iq);
+  margin-bottom:6px;
+}
+.field{margin-top:18px}
+.field:first-of-type{margin-top:0}
+label{display:block;font-weight:600;font-size:15.5px;margin-bottom:5px}
+.hint{display:block;font-weight:400;font-size:13.5px;color:var(--mute);margin-top:-3px;margin-bottom:6px}
+input[type=text],input[type=email],input[type=number],input[type=date],select,textarea{
+  width:100%;
+  font-family:inherit;
+  font-size:16px;
+  color:var(--ink);
+  background:var(--paper);
+  border:1.5px solid var(--rule);
+  border-radius:3px;
+  padding:10px 12px;
+}
+textarea{resize:vertical;min-height:84px}
+input:focus,select:focus,textarea:focus{border-color:var(--iq)}
+.size{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 92px;gap:10px}
+@media (max-width:520px){.size{grid-template-columns:repeat(3,minmax(0,1fr));}.size select{grid-column:1/-1}}
+.size input{text-align:center}
+.choices{display:grid;gap:9px;margin-top:4px}
+.choice{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  border:1.5px solid var(--rule);
+  border-radius:3px;
+  padding:11px 13px;
+  cursor:pointer;
+  background:var(--paper);
+}
+.choice:hover{border-color:var(--iq)}
+.choice input{margin-top:5px;flex:none}
+.choice span{font-size:15.5px;line-height:1.45}
+.choice b{display:block;font-weight:600}
+.choice em{font-style:normal;color:var(--mute);font-size:13.5px}
+
+.go{
+  display:inline-block;
+  margin-top:24px;
+  background:var(--bag);
+  color:var(--ink);
+  font-family:inherit;
+  font-size:17px;
+  font-weight:600;
+  padding:13px 22px;
+  border:2px solid var(--ink);
+  border-radius:3px;
+  cursor:pointer;
+}
+.go:hover,.go:focus-visible{background:var(--bag-deep)}
+.ghost{
+  margin-top:24px;
+  margin-left:10px;
+  background:transparent;
+  font-family:inherit;
+  font-size:15px;
+  color:var(--ink);
+  padding:13px 18px;
+  border:2px solid var(--ink);
+  border-radius:3px;
+  cursor:pointer;
+}
+.ghost:hover,.ghost:focus-visible{background:var(--paper)}
+
+.after{
+  margin-top:22px;
+  border:2px solid var(--iq);
+  border-radius:4px;
+  background:#F2F9FD;
+  padding:18px 20px;
+}
+.after h3{font-size:17px;margin-bottom:6px}
+.after p{font-size:15.5px;margin-bottom:8px}
+.after p:last-child{margin-bottom:0}
+.after[hidden]{display:none}
+
+.notes h2{font-size:19px;margin-bottom:8px}
+.notes section{margin-bottom:26px}
+.notes p{font-size:15.5px;color:#30465b;margin-bottom:9px}
+.notes a{color:var(--iq)}
+.bad{border-left:3px solid var(--bag-deep);padding-left:14px}
+
+.plain{font-size:15px;color:var(--mute);margin-top:14px}
+.plain a{color:var(--iq)}
+.embed{width:100%;min-height:1100px;border:0}
+</style>
+</head>
+<body>
+
+<header class="masthead wrap">
+  <span class="mark"><a href="index.html">Mighty Bees</a> <span class="mark-sub">Centner Robotics</span></span>
+  <nav>
+    <a href="index.html#log">Build log</a>
+    <a href="index.html#shop">What we make</a>
+    <a href="printing.html" aria-current="page">3D printing</a>
+    <a href="index.html#support">Support us</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <div class="top">
+    <h1>Get a 3D print quote.</h1>
+    <p class="lede">We rent out time on the team's 3D printers. You send us the file and the details, we come back with a price and a date, and if you're happy we print it. Students do the work and every dollar goes to the robotics team.</p>
+    <p class="lede">Tell us about the job below. It takes a minute.</p>
+  </div>
+
+  <div class="cols">
+
+    <div>
+      <div class="card" id="formcard">
+        <form id="quote" novalidate>
+          <p class="step">Step 1 of 2</p>
+          <h2>About the job</h2>
+
+          <div class="field">
+            <label for="q-name">Your name</label>
+            <input type="text" id="q-name" name="name" autocomplete="name" required>
+          </div>
+
+          <div class="field">
+            <label for="q-email">Your email</label>
+            <span class="hint">So we can send the quote back.</span>
+            <input type="email" id="q-email" name="email" autocomplete="email" required>
+          </div>
+
+          <div class="field">
+            <label for="q-what">What are we printing?</label>
+            <span class="hint">What the part is and what it's for. A replacement knob, a prop, a prototype, whatever it is.</span>
+            <textarea id="q-what" name="what" required></textarea>
+          </div>
+
+          <div class="field">
+            <label for="q-l">How big is it?</label>
+            <span class="hint">Length, width and height. A rough measurement is fine. If it's bigger than our print bed we'll tell you, and we can often split a model into pieces and glue them.</span>
+            <div class="size">
+              <input type="number" id="q-l" name="length" min="0" step="any" placeholder="Length" aria-label="Length">
+              <input type="number" id="q-w" name="width" min="0" step="any" placeholder="Width" aria-label="Width">
+              <input type="number" id="q-h" name="height" min="0" step="any" placeholder="Height" aria-label="Height">
+              <select id="q-units" name="units" aria-label="Units">
+                <option value="mm">mm</option>
+                <option value="in">inches</option>
+                <option value="cm">cm</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="q-qty">How many do you need?</label>
+            <input type="number" id="q-qty" name="qty" min="1" step="1" value="1">
+          </div>
+
+          <div class="field">
+            <label>Filament</label>
+            <div class="choices">
+              <label class="choice">
+                <input type="radio" name="filament" value="team" checked>
+                <span><b>Use yours</b><em>The filament goes into the quote along with the printer time.</em></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="filament" value="mine">
+                <span><b>I'll supply my own</b><em>Get it to us before the print and we'll quote printer time only.</em></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="q-material">Material or color you want</label>
+            <span class="hint">Optional. Tell us what you had in mind and we'll say whether we can do it.</span>
+            <input type="text" id="q-material" name="material" placeholder="e.g. black PLA">
+          </div>
+
+          <div class="field">
+            <label for="q-when">Do you need it by a certain date?</label>
+            <span class="hint">Optional. The students print on meeting days, so give us some room if you can.</span>
+            <input type="date" id="q-when" name="when">
+          </div>
+
+          <div class="field">
+            <label for="q-notes">Anything else we should know?</label>
+            <span class="hint">Optional. Strength, finish, whether it has to fit something exactly.</span>
+            <textarea id="q-notes" name="notes"></textarea>
+          </div>
+
+          <button type="submit" class="go">Next: send us the file</button>
+          <button type="button" class="ghost" id="copy">Copy the details instead</button>
+          <p class="plain">No account needed. Nothing is stored on this page, and we only use your email to answer you.</p>
+        </form>
+      </div>
+
+      <div class="after" id="after" hidden>
+        <p class="step">Step 2 of 2</p>
+        <h3>Attach your file and hit send</h3>
+        <p>Your email program should have opened with all of that filled in. <b>Attach your .stl file to it</b> (.3mf, .obj and .step work too), then send.</p>
+        <p>If nothing opened, press <b>Copy the details instead</b> above and paste them into an email to <a id="plainmail" href="#">team@mightybeesrobotics.org</a>, with the file attached.</p>
+        <p>No file yet, just an idea? Send it anyway and say so. Students can draw it up.</p>
+      </div>
+
+      <div id="embedbox" hidden></div>
+    </div>
+
+    <div class="notes">
+      <section>
+        <h2>What it costs</h2>
+        <p>It depends on the size of the part, how long it sits on the printer and whose filament it uses, so we quote each job rather than publish a price list. We'll tell you the price before anything gets printed.</p>
+      </section>
+      <section>
+        <h2>How long it takes</h2>
+        <p>The team meets Wednesdays and Fridays, so prints start on those days. Small parts usually come back within a week. Big ones or a batch take longer, and we'll say so in the quote.</p>
+      </section>
+      <section>
+        <h2>What we can't print</h2>
+        <p class="bad">Nothing that holds food or drink, no weapon or weapon parts, and nothing a student shouldn't be handling. We'll say no to a job we're not comfortable with, and we'll tell you why.</p>
+      </section>
+      <section>
+        <h2>Questions first?</h2>
+        <p>Email <a id="askmail" href="#">team@mightybeesrobotics.org</a> and ask. You don't have to fill in the form to talk to us.</p>
+      </section>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="wrap">
+  <span>Mighty Bees · Centner Academy · Grades 5-8 · Wednesdays and Fridays, 4:00-5:00</span>
+  <span>Team 31800</span>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* If a Google Form link has been pasted into UPLOAD_FORM at the top of this
+     file, show that form instead of ours. It can take the file upload itself. */
+  if (typeof UPLOAD_FORM === "string" && UPLOAD_FORM.indexOf("https://") === 0) {
+    const card = document.getElementById("formcard");
+    const box = document.getElementById("embedbox");
+    const frame = document.createElement("iframe");
+    frame.className = "embed";
+    frame.src = UPLOAD_FORM;
+    frame.title = "3D print quote request form";
+    frame.loading = "lazy";
+    box.appendChild(frame);
+    box.hidden = false;
+    card.hidden = true;
+    return;
+  }
+
+  const mail = "mailto:" + CONTACT;
+  ["plainmail", "askmail"].forEach(id => {
+    const a = document.getElementById(id);
+    if (a) { a.href = mail + "?subject=" + encodeURIComponent("3D printing question"); a.textContent = CONTACT; }
+  });
+
+  const form = document.getElementById("quote");
+  const after = document.getElementById("after");
+  const val = id => (document.getElementById(id).value || "").trim();
+
+  /* Turns the answers into a plain-text email body. Anything left blank is
+     left out, so the email never has empty lines hanging off it. */
+  function compose() {
+    const units = val("q-units");
+    const dims = ["q-l", "q-w", "q-h"].map(val).filter(Boolean);
+    const filament = document.querySelector('input[name="filament"]:checked');
+    const mine = filament && filament.value === "mine";
+    const lines = [];
+
+    lines.push("Hi Mighty Bees, I'd like a quote for a 3D print.");
+    lines.push("");
+    lines.push("Name: " + val("q-name"));
+    lines.push("Email: " + val("q-email"));
+    lines.push("");
+    lines.push("What it is: " + val("q-what"));
+    if (dims.length === 3) lines.push("Size: " + dims.join(" x ") + " " + units);
+    else if (dims.length) lines.push("Size: " + dims.join(" x ") + " " + units + " (partial)");
+    lines.push("How many: " + (val("q-qty") || "1"));
+    lines.push("Filament: " + (mine ? "I'm supplying my own" : "Please use yours"));
+    if (val("q-material")) lines.push("Material or color: " + val("q-material"));
+    if (val("q-when")) lines.push("Needed by: " + val("q-when"));
+    if (val("q-notes")) lines.push("Other notes: " + val("q-notes"));
+    lines.push("");
+    lines.push("(My file is attached.)");
+    return lines.join("\n");
+  }
+
+  function subject() {
+    const who = val("q-name");
+    return "3D print quote request" + (who ? " - " + who : "");
+  }
+
+  /* Checks the three fields we can't do anything without. */
+  function missing() {
+    const need = [["q-name", "your name"], ["q-email", "your email"], ["q-what", "what we're printing"]];
+    const gaps = need.filter(([id]) => !val(id));
+    const email = val("q-email");
+    if (email && email.indexOf("@") < 1) gaps.push(["q-email", "a working email address"]);
+    return gaps;
+  }
+
+  function flag(gaps) {
+    alert("Before we can quote it we need " + gaps.map(g => g[1]).join(", ") + ".");
+    const first = document.getElementById(gaps[0][0]);
+    if (first) first.focus();
+  }
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const gaps = missing();
+    if (gaps.length) { flag(gaps); return; }
+    after.hidden = false;
+    after.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    window.location.href = mail +
+      "?subject=" + encodeURIComponent(subject()) +
+      "&body=" + encodeURIComponent(compose());
+  });
+
+  document.getElementById("copy").addEventListener("click", function () {
+    const gaps = missing();
+    if (gaps.length) { flag(gaps); return; }
+    const btn = this;
+    const text = compose();
+    const done = () => {
+      btn.textContent = "Copied!";
+      after.hidden = false;
+      setTimeout(() => { btn.textContent = "Copy the details instead"; }, 1800);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, () => fallback(text, done));
+    } else {
+      fallback(text, done);
+    }
+  });
+
+  function fallback(text, done) {
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      done();
+    } catch (e) {
+      alert("Copying didn't work in this browser. Email " + CONTACT + " and tell us what you need printed.");
+    }
+  }
+})();
+</script>
+</body></html>

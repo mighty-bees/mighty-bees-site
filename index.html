@@ -90,6 +90,8 @@ body{
 .masthead nav{display:flex;gap:22px;font-size:15px}
 .masthead nav a{color:var(--mute);text-decoration:none}
 .masthead nav a:hover,.masthead nav a:focus-visible{color:var(--ink);text-decoration:underline}
+/* Four links don't fit across a phone, so let them wrap and tighten up. */
+@media (max-width:560px){.masthead nav{flex-wrap:wrap;gap:8px 16px;font-size:14px}}
 
 /* ── hero ─────────────────────────────────── */
 .hero{
@@ -490,8 +492,9 @@ footer{
 <header class="masthead wrap">
   <span class="mark">Mighty Bees <span class="mark-sub">Centner Robotics</span></span>
   <nav>
-    <a href="#shop">What we make</a>
     <a href="#log">Build log</a>
+    <a href="#shop">What we make</a>
+    <a href="printing.html">3D printing</a>
     <a href="#support">Support us</a>
   </nav>
 </header>
@@ -523,17 +526,6 @@ footer{
 
 </main>
 
-<section id="shop">
-  <div class="wrap">
-    <h2>What we make <span class="flag">Opening soon</span></h2>
-    <p class="sub">Everything here is designed and produced by students on our 3D printers and laser cutter, made to order. We're still getting the printers dialed in, so the shop isn't open yet. Here's what's coming.</p>
-
-    <div class="goods preview" id="goods"></div>
-
-    <p class="made"><b>Want to be told when it opens?</b> <a id="shopmail" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email us</a> and we'll let you know. We also take custom jobs, so if you need something that isn't on this list, tell us and we'll quote it. Designing to a real brief is the most useful thing these students do all year.</p>
-  </div>
-</section>
-
 <section id="log">
   <div class="wrap">
     <h2>Build log</h2>
@@ -542,6 +534,17 @@ footer{
     <div id="posts"></div>
     <button type="button" class="more" id="morebtn" aria-controls="posts" hidden></button>
 
+  </div>
+</section>
+
+<section id="shop">
+  <div class="wrap">
+    <h2>What we make</h2>
+    <p class="sub">Everything here is designed and produced by students on our 3D printers and laser cutter, made to order.</p>
+
+    <div class="goods" id="goods"></div>
+
+    <p class="made"><b>Want one?</b> <a id="shopmail" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email us</a> and we'll tell you how soon we can have it ready. We also take custom jobs. If you have your own file, <a href="printing.html">send it over for a 3D print quote</a>. If you need something that doesn't exist yet, tell us and the students will design it. Working to a real brief is the most useful thing they do all year.</p>
   </div>
 </section>
 
