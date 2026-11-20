@@ -365,14 +365,51 @@ h2{
 .emailline a{color:var(--iq);text-decoration:underline;text-underline-offset:2px;font-weight:600}
 .emailline a:hover,.emailline a:focus-visible{color:var(--ink)}
 .sponsor-col{display:grid;gap:24px;align-content:start}
-.thanks-note{
-  margin-top:14px;
-  padding-top:12px;
-  border-top:1px solid var(--rule);
-  font-size:13.5px;
-  line-height:1.5;
-  color:var(--mute);
+/* The little "how would you like to be thanked" block by the donate button.
+   It doesn't send anything anywhere. It writes the wording for you and puts
+   it on your clipboard, so you can paste it into PayPal's own note field. */
+.thankbox{
+  margin-top:26px;
+  border:2px solid var(--ink);
+  border-radius:4px;
+  background:var(--card);
+  padding:20px 21px 22px;
+  max-width:460px;
 }
+.thankbox h3{font-size:17px;margin-bottom:6px}
+.tb-why{font-size:14.5px;line-height:1.5;color:var(--mute);margin-bottom:16px}
+.tb-field{margin-bottom:13px}
+.tb-field label{display:block;font-weight:600;font-size:14.5px;margin-bottom:5px}
+.tb-field label span{font-weight:400;color:var(--mute)}
+.tb-field input{
+  width:100%;
+  font-family:inherit;
+  font-size:15.5px;
+  color:var(--ink);
+  background:var(--paper);
+  border:1.5px solid var(--rule);
+  border-radius:3px;
+  padding:9px 11px;
+}
+.tb-field input:focus{border-color:var(--iq)}
+.tb-field input:disabled{opacity:.45}
+.tb-check{display:flex;align-items:flex-start;gap:9px;font-size:14.5px;line-height:1.45;margin-top:9px;cursor:pointer}
+.tb-check input{margin-top:4px;flex:none}
+.tb-go{
+  margin-top:17px;
+  font-family:inherit;
+  font-size:15px;
+  font-weight:600;
+  color:var(--ink);
+  background:var(--bag);
+  border:2px solid var(--ink);
+  border-radius:3px;
+  padding:10px 18px;
+  cursor:pointer;
+}
+.tb-go:hover,.tb-go:focus-visible{background:var(--bag-deep)}
+.tb-done{margin-top:11px;font-size:14px;color:var(--iq);font-weight:600}
+.tb-done[hidden]{display:none}
 .thanks a{color:var(--iq);text-decoration:underline;text-underline-offset:2px}
 .thanks a:hover,.thanks a:focus-visible{color:var(--ink)}
 .sponsor{border:2px solid var(--ink);border-radius:3px;padding:24px}
@@ -557,7 +594,22 @@ footer{
         <p>Use the payment link for anything you can pay right now. Email us for custom orders, business sponsorships, or to ask what we still need.</p>
         <a class="mail" id="paylink" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email to donate or order</a>
         <a class="mail ghost" id="mailto" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">Email the team</a>
-        <p class="emailline"><strong>When you pay, add a note.</strong> Tell us the name you'd like thanked and whether we can show the amount, or say you'd rather stay anonymous. Businesses can add a website and we'll link it.</p>
+        <div class="thankbox">
+          <h3>How would you like to be thanked?</h3>
+          <p class="tb-why"><strong>When you pay, add a note.</strong> Tell us the name you'd like thanked and whether we can show the amount, or say you'd rather stay anonymous. Businesses can add a website and we'll link it. Fill this in and we'll write that note for you to paste.</p>
+          <div class="tb-field">
+            <label for="tb-name">Name to thank</label>
+            <input type="text" id="tb-name" placeholder="The Alvarez Family, or your business">
+          </div>
+          <div class="tb-field">
+            <label for="tb-site">Website to link <span>businesses, optional</span></label>
+            <input type="text" id="tb-site" placeholder="https://">
+          </div>
+          <label class="tb-check"><input type="checkbox" id="tb-amount"> You can show how much I gave</label>
+          <label class="tb-check"><input type="checkbox" id="tb-anon"> Thank me as Anonymous instead</label>
+          <button type="button" class="tb-go" id="tb-go">Copy my note</button>
+          <p class="tb-done" id="tb-done" hidden></p>
+        </div>
         <p class="emailline">Or write to us directly: <a id="emailtext" href="mailto:team@mightybeesrobotics.org?subject=Mighty%20Bees%20Robotics">team@mightybeesrobotics.org</a></p>
       </div>
 
@@ -565,7 +617,6 @@ footer{
       <div class="sponsor">
         <h3>Thanks to...</h3>
         <ul class="thanks" id="thanks"></ul>
-        <p class="thanks-note">We only list people who said we could. Tell us if you'd rather not be named.</p>
       </div>
 
       <div class="sponsor">
@@ -618,6 +669,57 @@ footer{
       pay.textContent = "Email to donate or order";
     }
   }
+
+  /* The "how would you like to be thanked" block. It builds the wording and
+     copies it, and that's all. Nothing is sent anywhere and nothing is kept.
+     Hidden while donations are paused, since there'd be nothing to paste into. */
+  (function () {
+    const box = document.querySelector(".thankbox");
+    if (!box) return;
+    if (!DONATIONS_OPEN) { box.hidden = true; return; }
+
+    const name   = document.getElementById("tb-name");
+    const site   = document.getElementById("tb-site");
+    const amount = document.getElementById("tb-amount");
+    const anon   = document.getElementById("tb-anon");
+    const go     = document.getElementById("tb-go");
+    const done   = document.getElementById("tb-done");
+    if (!name || !site || !amount || !anon || !go || !done) return;
+
+    function say(msg) { done.textContent = msg; done.hidden = false; }
+
+    // A name and "Anonymous" contradict each other, so one greys out the other.
+    anon.addEventListener("change", () => {
+      const off = anon.checked;
+      name.disabled = off;
+      site.disabled = off;
+      amount.disabled = off;
+      if (off) amount.checked = false;
+      done.hidden = true;
+    });
+
+    function sentence() {
+      if (anon.checked) return "Mighty Bees donation. Please thank me as Anonymous.";
+      const who = (name.value || "").trim();
+      if (!who) return "";
+      let s = "Mighty Bees donation. Please thank " + who + ".";
+      s += amount.checked ? " You can show the amount." : " Please don't show the amount.";
+      const url = (site.value || "").trim();
+      if (url) s += " Website: " + url;
+      return s;
+    }
+
+    go.addEventListener("click", () => {
+      const text = sentence();
+      if (!text) { say("Put a name in first, or tick Anonymous."); name.focus(); return; }
+      const ok = () => say("Copied. Paste it into the note when you pay.");
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(ok, () => fallbackCopy(text, ok));
+      } else {
+        fallbackCopy(text, ok);
+      }
+    });
+  })();
 
   // Under-construction banner shows unless the switch is off.
   const banner = document.getElementById("construction");

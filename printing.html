@@ -309,7 +309,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--iq)}
 
           <button type="submit" class="go">Next: send us the file</button>
           <button type="button" class="ghost" id="copy">Copy the details instead</button>
-          <p class="plain">No account needed. Nothing is stored on this page, and we only use your email to answer you.</p>
+          <p class="plain"><b>Stuck, or this isn't working?</b> Email <a id="stuckmail" href="#">team@mightybeesrobotics.org</a> and just tell us what you need printed. No account needed either way, nothing is stored on this page, and we only use your email to answer you.</p>
         </form>
       </div>
 
@@ -373,7 +373,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--iq)}
   }
 
   const mail = "mailto:" + CONTACT;
-  ["plainmail", "askmail"].forEach(id => {
+  ["plainmail", "askmail", "stuckmail"].forEach(id => {
     const a = document.getElementById(id);
     if (a) { a.href = mail + "?subject=" + encodeURIComponent("3D printing question"); a.textContent = CONTACT; }
   });
