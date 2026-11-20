@@ -74,7 +74,6 @@ body{
 footer{
   border-top:2px solid var(--ink);
   padding:28px 0 50px;
-  margin-top:70px;
   font-size:14px;
   color:var(--mute);
   display:flex;
@@ -82,6 +81,9 @@ footer{
   gap:16px;
   flex-wrap:wrap;
 }
+/* Needs the class too, or .wrap's own margin wins and the footer rule ends
+   up sitting right on the bottom of the form. */
+footer.wrap{margin-top:80px}
 :focus-visible{outline:3px solid var(--iq);outline-offset:2px}
 
 h1{
